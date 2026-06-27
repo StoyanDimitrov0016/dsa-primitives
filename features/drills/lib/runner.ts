@@ -1,6 +1,5 @@
+import { DRILL_RUNNER_WORKER_PATH, RUN_TIMEOUT_MS } from "../constants";
 import type { Drill, DrillCase, RunResult, RunState } from "../types";
-
-const RUN_TIMEOUT_MS = 1200;
 
 export function runInWorker(
   drill: Drill,
@@ -8,7 +7,7 @@ export function runInWorker(
   cases: Array<DrillCase & { kind: "visible" | "hidden" }>
 ): Promise<RunState> {
   const startedAt = performance.now();
-  const worker = new Worker("/drill-runner.worker.js");
+  const worker = new Worker(DRILL_RUNNER_WORKER_PATH);
 
   return new Promise((resolve) => {
     const timeoutId = window.setTimeout(() => {
@@ -53,6 +52,7 @@ export function runInWorker(
 
     worker.postMessage({
       code,
+      comparison: drill.comparison ?? "deepEqual",
       functionName: drill.functionName,
       cases,
     });

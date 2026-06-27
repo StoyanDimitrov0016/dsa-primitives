@@ -8,6 +8,7 @@ import estreePlugin from "prettier/plugins/estree";
 import { Button } from "@/components/ui/button";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { DEFAULT_OPEN_GROUP_IDS, THEME_STORAGE_KEY } from "../constants";
 import { runInWorker } from "../lib/runner";
 import type { Drill, DrillGroup, RunState, Theme } from "../types";
 import { AppHeader } from "./app-header";
@@ -30,7 +31,7 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
       return "dark";
     }
 
-    const storedTheme = window.localStorage.getItem("lp-theme");
+    const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
 
     if (storedTheme === "light" || storedTheme === "dark") {
       return storedTheme;
@@ -39,8 +40,7 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
     return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
   });
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({
-    arrays: true,
-    searching: true,
+    ...Object.fromEntries(DEFAULT_OPEN_GROUP_IDS.map((groupId) => [groupId, true])),
     [selectedDrill.groupId]: true,
   });
   const [solutions, setSolutions] = useState<Record<string, string>>(() =>
@@ -52,7 +52,7 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
-    window.localStorage.setItem("lp-theme", theme);
+    window.localStorage.setItem(THEME_STORAGE_KEY, theme);
   }, [theme]);
 
   function updateCode(nextCode: string) {
@@ -131,7 +131,7 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
           <ResizablePanelGroup className="min-h-0" orientation="vertical">
             <ResizablePanel defaultSize={72} minSize={42}>
               <div className="flex h-full min-h-0 flex-col">
-                <DrillHeader drill={selectedDrill} runState={runState} />
+                <DrillHeader drill={selectedDrill} />
                 <div className="flex shrink-0 flex-col border-b">
                   <div className="flex h-11 items-center justify-between px-3">
                     <div className="text-sm font-medium">Solution</div>

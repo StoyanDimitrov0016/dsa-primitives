@@ -1,9 +1,25 @@
-function isEqual(actual, expected) {
-  return JSON.stringify(actual) === JSON.stringify(expected);
+function stringify(value) {
+  return JSON.stringify(value);
+}
+
+function normalizeUnorderedArray(value) {
+  if (!Array.isArray(value)) {
+    return value;
+  }
+
+  return [...value].sort((left, right) => stringify(left).localeCompare(stringify(right)));
+}
+
+function isEqual(actual, expected, comparison) {
+  if (comparison === "unorderedArray") {
+    return stringify(normalizeUnorderedArray(actual)) === stringify(normalizeUnorderedArray(expected));
+  }
+
+  return stringify(actual) === stringify(expected);
 }
 
 self.onmessage = (event) => {
-  const { code, functionName, cases } = event.data;
+  const { code, comparison = "deepEqual", functionName, cases } = event.data;
 
   try {
     const solution = new Function(
@@ -27,7 +43,7 @@ return typeof ${functionName} === "function" ? ${functionName} : undefined;`,
         return {
           name: testCase.name,
           kind: testCase.kind,
-          passed: isEqual(actual, testCase.expected),
+          passed: isEqual(actual, testCase.expected, comparison),
           expected: testCase.expected,
           actual,
         };

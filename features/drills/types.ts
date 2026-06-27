@@ -4,6 +4,8 @@ export type DrillCase = {
   expected: unknown;
 };
 
+export type DrillComparison = "deepEqual" | "unorderedArray";
+
 export type Drill = {
   id: string;
   groupId: string;
@@ -12,6 +14,7 @@ export type Drill = {
   summary: string;
   prompt: string;
   functionName: string;
+  comparison?: DrillComparison;
   starterCode: string;
   visibleCases: DrillCase[];
   hiddenCases: DrillCase[];

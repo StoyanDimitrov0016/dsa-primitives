@@ -1,5 +1,6 @@
 import type { BeforeMount } from "@monaco-editor/react";
 import type { editor } from "monaco-editor";
+import { MONACO_DARK_THEME_ID, MONACO_LANGUAGE_ID, MONACO_LIGHT_THEME_ID } from "../constants";
 
 export const editorOptions: editor.IStandaloneEditorConstructionOptions = {
   automaticLayout: true,
@@ -40,11 +41,11 @@ export const defineEditorTheme: BeforeMount = (monaco) => {
     .getLanguages()
     .map((language: { id: string }) => language.id);
 
-  if (!languageIds.includes("primitive-javascript")) {
-    monaco.languages.register({ id: "primitive-javascript" });
+  if (!languageIds.includes(MONACO_LANGUAGE_ID)) {
+    monaco.languages.register({ id: MONACO_LANGUAGE_ID });
   }
 
-  monaco.languages.setMonarchTokensProvider("primitive-javascript", {
+  monaco.languages.setMonarchTokensProvider(MONACO_LANGUAGE_ID, {
     defaultToken: "identifier",
     tokenPostfix: ".js",
     keywords: [
@@ -143,7 +144,7 @@ export const defineEditorTheme: BeforeMount = (monaco) => {
     },
   });
 
-  monaco.editor.defineTheme("primitive-light", {
+  monaco.editor.defineTheme(MONACO_LIGHT_THEME_ID, {
     base: "vs",
     inherit: true,
     rules: [
@@ -180,7 +181,7 @@ export const defineEditorTheme: BeforeMount = (monaco) => {
     },
   });
 
-  monaco.editor.defineTheme("primitive-dark", {
+  monaco.editor.defineTheme(MONACO_DARK_THEME_ID, {
     base: "vs-dark",
     inherit: true,
     rules: [

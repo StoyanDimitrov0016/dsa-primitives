@@ -2,6 +2,7 @@
 
 import Editor, { type OnMount } from "@monaco-editor/react";
 import { cn } from "@/lib/utils";
+import { MONACO_DARK_THEME_ID, MONACO_LANGUAGE_ID, MONACO_LIGHT_THEME_ID } from "../constants";
 import { defineEditorTheme, editorOptions } from "../lib/editor-config";
 import type { Theme } from "../types";
 
@@ -21,9 +22,9 @@ export function SolutionEditor({ code, theme, onChange }: SolutionEditorProps) {
       <Editor
         aria-label="Solution code"
         beforeMount={defineEditorTheme}
-        defaultLanguage="primitive-javascript"
+        defaultLanguage={MONACO_LANGUAGE_ID}
         height="100%"
-        language="primitive-javascript"
+        language={MONACO_LANGUAGE_ID}
         loading={
           <div
             className={cn(
@@ -37,7 +38,7 @@ export function SolutionEditor({ code, theme, onChange }: SolutionEditorProps) {
         onChange={(value) => onChange(value ?? "")}
         onMount={handleEditorMount}
         options={editorOptions}
-        theme={theme === "dark" ? "primitive-dark" : "primitive-light"}
+        theme={theme === "dark" ? MONACO_DARK_THEME_ID : MONACO_LIGHT_THEME_ID}
         value={code}
       />
     </div>
