@@ -1,0 +1,10 @@
+.next
+node_modules
+out
+build
+coverage
+components/ui
+hooks/use-mobile.ts
+public/drill-runner.worker.js
+next-env.d.ts
+package-lock.json
