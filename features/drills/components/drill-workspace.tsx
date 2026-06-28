@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Code2, Play, RotateCcw } from "lucide-react";
+import { Code2, PanelRightClose, PanelRightOpen, Play, RotateCcw } from "lucide-react";
 import prettier from "prettier/standalone";
 import babelPlugin from "prettier/plugins/babel";
 import estreePlugin from "prettier/plugins/estree";
@@ -14,15 +14,16 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
 import { THEME_STORAGE_KEY } from "../constants";
 import { runInWorker } from "../lib/runner";
 import type { Drill, DrillGroup, RunState, Theme } from "../types";
 import { ConsolePanel } from "./console-panel";
+import { DrillReferencePanel } from "./drill-reference-panel";
 import { DrillHeader } from "./drill-header";
 import { IconButton } from "./icon-button";
 import { PrimitiveMobileNavigation, PrimitiveSidebar } from "./primitive-sidebar";
 import { SolutionEditor } from "./solution-editor";
-import { VisibleTestsPanel } from "./visible-tests-panel";
 
 type DrillWorkspaceProps = {
   drillGroups: DrillGroup[];
@@ -53,6 +54,7 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
   const [runState, setRunState] = useState<RunState>({ status: "idle" });
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isMobileNavigationOpen, setIsMobileNavigationOpen] = useState(false);
+  const [isReferencePanelOpen, setIsReferencePanelOpen] = useState(true);
 
   const code = solutions[selectedDrill.id] ?? selectedDrill.starterCode;
 
@@ -145,7 +147,12 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
       />
 
       <section className="min-w-0 flex-1 overflow-hidden">
-        <div className="grid h-full min-h-0 overflow-hidden xl:grid-cols-[minmax(0,1fr)_320px]">
+        <div
+          className={cn(
+            "grid h-full min-h-0 overflow-hidden",
+            isReferencePanelOpen && "xl:grid-cols-[minmax(0,1fr)_320px]"
+          )}
+        >
           <ResizablePanelGroup className="h-full min-h-0 overflow-hidden" orientation="vertical">
             <ResizablePanel className="min-h-0 overflow-hidden" defaultSize={72} minSize={42}>
               <div className="flex h-full min-h-0 flex-col overflow-hidden">
@@ -164,6 +171,21 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
                       </IconButton>
                       <IconButton label="Reset solution" onClick={resetCode}>
                         <RotateCcw className="size-4" />
+                      </IconButton>
+                      <IconButton
+                        className="hidden xl:inline-flex"
+                        label={
+                          isReferencePanelOpen
+                            ? "Collapse reference panel"
+                            : "Expand reference panel"
+                        }
+                        onClick={() => setIsReferencePanelOpen((current) => !current)}
+                      >
+                        {isReferencePanelOpen ? (
+                          <PanelRightClose className="size-4" />
+                        ) : (
+                          <PanelRightOpen className="size-4" />
+                        )}
                       </IconButton>
                       <Button
                         className="gap-2"
@@ -186,7 +208,7 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
             </ResizablePanel>
           </ResizablePanelGroup>
 
-          <VisibleTestsPanel drill={selectedDrill} />
+          {isReferencePanelOpen ? <DrillReferencePanel drill={selectedDrill} /> : null}
         </div>
       </section>
     </div>
