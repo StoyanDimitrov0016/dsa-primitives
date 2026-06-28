@@ -3,7 +3,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "LeetCode Primitives",
+  title: "DSA Primitives",
   description: "Drill algorithm building blocks in the browser.",
 };
 

@@ -39,12 +39,12 @@ export function PrimitiveSidebar({
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" tooltip="LeetCode Primitives">
+            <SidebarMenuButton size="lg" tooltip="DSA Primitives">
               <div className="flex size-8 items-center justify-center rounded-md bg-sidebar-primary text-sidebar-primary-foreground">
                 <Braces className="size-4" />
               </div>
               <div className="min-w-0">
-                <p className="truncate text-sm font-semibold">LeetCode Primitives</p>
+                <p className="truncate text-sm font-semibold">DSA Primitives</p>
                 <p className="truncate text-xs text-muted-foreground">Pattern catalog</p>
               </div>
             </SidebarMenuButton>
@@ -66,6 +66,7 @@ export function PrimitiveSidebar({
             >
               <SidebarGroup>
                 <CollapsibleTrigger
+                  nativeButton={false}
                   render={
                     <SidebarGroupLabel className="cursor-pointer">
                       <span>{group.title}</span>

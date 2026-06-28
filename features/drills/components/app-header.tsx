@@ -19,7 +19,7 @@ export function AppHeader({ theme, onToggleTheme }: AppHeaderProps) {
         <Separator className="hidden h-6 md:block" orientation="vertical" />
 
         <div className="flex min-w-0 items-center gap-4">
-          <span className="truncate text-sm font-semibold">LeetCode Primitives</span>
+          <span className="truncate text-sm font-semibold">DSA Primitives</span>
           <nav className="hidden items-center gap-1 text-sm text-muted-foreground md:flex">
             <Button size="sm" variant="ghost">
               Library
