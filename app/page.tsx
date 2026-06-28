@@ -1,6 +1,6 @@
-import { redirect } from "next/navigation";
-import { defaultDrill } from "./drills";
+import { HomePage } from "@/features/drills/components/home-page";
+import { drillGroups, drills } from "./drills";
 
 export default function Home() {
-  redirect(`/practice/${defaultDrill.groupId}/${defaultDrill.id}`);
+  return <HomePage drillGroups={drillGroups} drills={drills} />;
 }
