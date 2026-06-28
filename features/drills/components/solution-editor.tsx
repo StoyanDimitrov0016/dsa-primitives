@@ -18,7 +18,7 @@ const handleEditorMount: OnMount = (editorInstance) => {
 
 export function SolutionEditor({ code, theme, onChange }: SolutionEditorProps) {
   return (
-    <div className="min-h-0 flex-1 bg-[var(--editor)]">
+    <div className="min-h-0 flex-1 overflow-hidden bg-[var(--editor)]">
       <Editor
         aria-label="Solution code"
         beforeMount={defineEditorTheme}

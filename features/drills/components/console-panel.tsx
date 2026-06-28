@@ -18,7 +18,7 @@ export function ConsolePanel({ runState, theme }: ConsolePanelProps) {
   const passedCount = results.filter((result) => result.passed).length;
 
   return (
-    <div className="flex h-full flex-col bg-[var(--console)] text-[var(--console-foreground)]">
+    <div className="flex h-full min-h-0 flex-col overflow-hidden bg-[var(--console)] text-[var(--console-foreground)]">
       <div className="flex h-10 items-center justify-between border-b border-[var(--console-border)] px-3">
         <div className="flex items-center gap-2 text-sm font-medium">
           <Terminal className="size-4 text-muted-foreground" />

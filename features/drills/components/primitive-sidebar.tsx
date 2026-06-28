@@ -1,17 +1,12 @@
 import Link from "next/link";
-import { Braces, ChevronDown, FileCode2, Terminal } from "lucide-react";
+import { ChevronDown, FileCode2 } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
@@ -36,23 +31,7 @@ export function PrimitiveSidebar({
 }: PrimitiveSidebarProps) {
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton size="lg" tooltip="DSA Primitives">
-              <div className="flex size-8 items-center justify-center rounded-md bg-sidebar-primary text-sidebar-primary-foreground">
-                <Braces className="size-4" />
-              </div>
-              <div className="min-w-0">
-                <p className="truncate text-sm font-semibold">DSA Primitives</p>
-                <p className="truncate text-xs text-muted-foreground">Pattern catalog</p>
-              </div>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarHeader>
-
-      <SidebarContent>
+      <SidebarContent className="pt-3">
         {drillGroups.map((group) => {
           const groupDrills = drills.filter((drill) => drill.groupId === group.id);
           const hasActiveDrill = groupDrills.some((drill) => drill.id === selectedDrill.id);
@@ -108,17 +87,6 @@ export function PrimitiveSidebar({
           );
         })}
       </SidebarContent>
-
-      <SidebarFooter>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton disabled>
-              <Terminal className="size-4" />
-              <span>Browser runner</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );

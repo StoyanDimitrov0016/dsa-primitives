@@ -127,10 +127,10 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
       <SidebarInset className="min-h-0 overflow-hidden">
         <AppHeader onToggleTheme={toggleTheme} theme={theme} />
 
-        <div className="grid min-h-0 flex-1 grid-cols-1 xl:grid-cols-[minmax(0,1fr)_320px]">
-          <ResizablePanelGroup className="min-h-0" orientation="vertical">
-            <ResizablePanel defaultSize={72} minSize={42}>
-              <div className="flex h-full min-h-0 flex-col">
+        <div className="grid min-h-0 flex-1 overflow-hidden xl:grid-cols-[minmax(0,1fr)_320px]">
+          <ResizablePanelGroup className="h-full min-h-0 overflow-hidden" orientation="vertical">
+            <ResizablePanel className="min-h-0 overflow-hidden" defaultSize={72} minSize={42}>
+              <div className="flex h-full min-h-0 flex-col overflow-hidden">
                 <DrillHeader drill={selectedDrill} />
                 <div className="flex shrink-0 flex-col border-b">
                   <div className="flex h-11 items-center justify-between px-3">
@@ -158,7 +158,7 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
               </div>
             </ResizablePanel>
             <ResizableHandle withHandle />
-            <ResizablePanel defaultSize={28} minSize={18}>
+            <ResizablePanel className="min-h-0 overflow-hidden" defaultSize={28} minSize={18}>
               <ConsolePanel runState={runState} theme={theme} />
             </ResizablePanel>
           </ResizablePanelGroup>

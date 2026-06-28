@@ -30,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full font-sans antialiased" suppressHydrationWarning>
-      <body className="min-h-full flex flex-col">
+      <body className="h-full overflow-hidden flex flex-col">
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <TooltipProvider>{children}</TooltipProvider>
       </body>
