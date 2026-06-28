@@ -13,6 +13,7 @@ export type Drill = {
   category: string;
   summary: string;
   prompt: string;
+  lesson: string[];
   functionName: string;
   comparison?: DrillComparison;
   starterCode: string;

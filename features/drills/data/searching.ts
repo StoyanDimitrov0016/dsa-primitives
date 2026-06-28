@@ -9,6 +9,12 @@ export const searchingDrills: Drill[] = [
     summary: "Return the index of a target in a sorted array, or -1.",
     prompt:
       "Implement binary search over an ascending sorted array. Return any matching index if the target exists, otherwise return -1. Keep the search bounded by left and right indices so the range shrinks each step.",
+    lesson: [
+      "Binary search works because the array is sorted. At every step, the middle value tells you which half cannot contain the target.",
+      "Keep two inclusive boundaries, left and right. The search space is always the portion of the array between those boundaries.",
+      "When the middle value is too small, every index up to the middle can be discarded. When it is too large, every index from the middle onward can be discarded.",
+      "The loop ends when the boundaries cross. At that point the search space is empty, so the target is not present.",
+    ],
     functionName: "binarySearch",
     starterCode: `function binarySearch(nums, target) {
   // implement me

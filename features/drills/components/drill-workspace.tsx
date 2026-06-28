@@ -140,10 +140,6 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
 
       <Sheet onOpenChange={setIsMobileReferenceOpen} open={isMobileReferenceOpen}>
         <SheetContent className="gap-0 p-0 xl:hidden" side="right">
-          <SheetHeader className="border-b">
-            <SheetTitle>Lesson</SheetTitle>
-            <SheetDescription>Review the pattern behind this primitive.</SheetDescription>
-          </SheetHeader>
           <DrillReferenceContent drill={selectedDrill} />
         </SheetContent>
       </Sheet>

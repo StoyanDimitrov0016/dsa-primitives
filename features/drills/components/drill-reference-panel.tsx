@@ -16,19 +16,17 @@ type DrillReferencePanelProps = DrillReferenceContentProps & {
 export function DrillReferenceContent({ drill }: DrillReferenceContentProps) {
   return (
     <ScrollArea className="min-h-0 flex-1">
-      <div className="space-y-5 p-4">
-        <div>
-          <h2 className="text-sm font-semibold">Lesson</h2>
-          <p className="mt-1 text-xs text-muted-foreground">Pattern notes for this primitive.</p>
-        </div>
-
+      <div className="p-4">
         <section className="rounded-md border bg-card p-4">
-          <div className="mb-3 flex items-center gap-2">
+          <div className="mb-4 flex items-center gap-2">
             <Lightbulb className="size-4 text-muted-foreground" />
-            <h3 className="text-sm font-medium">{drill.category}</h3>
+            <h2 className="text-sm font-medium">{drill.title}</h2>
           </div>
-          <p className="text-sm leading-6 text-muted-foreground">{drill.summary}</p>
-          <p className="mt-3 text-sm leading-6 text-muted-foreground">{drill.prompt}</p>
+          <div className="space-y-3 text-sm leading-6 text-muted-foreground">
+            {drill.lesson.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
         </section>
       </div>
     </ScrollArea>

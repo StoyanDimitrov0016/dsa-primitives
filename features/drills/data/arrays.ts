@@ -9,6 +9,12 @@ export const arrayDrills: Drill[] = [
     summary: "Find two indices in a sorted array whose values add to target.",
     prompt:
       "Use two pointers over an ascending sorted array. Return a zero-based pair of indices, or null if no pair exists. The same element cannot be used twice.",
+    lesson: [
+      "The sorted order lets two pointers make directed progress. Start one pointer at the smallest value and one at the largest value.",
+      "If the current sum is too small, moving the left pointer right is the only useful move because it increases the sum.",
+      "If the current sum is too large, moving the right pointer left is the only useful move because it decreases the sum.",
+      "The pointers must never cross. Once they do, every valid pair has already been considered.",
+    ],
     functionName: "twoSumSorted",
     starterCode: `function twoSumSorted(nums, target) {
   // implement me
@@ -46,6 +52,12 @@ export const arrayDrills: Drill[] = [
     summary: "Build cumulative sums with an initial zero.",
     prompt:
       "Return a prefix sum array with length nums.length + 1, where prefix[0] is 0 and prefix[i + 1] is the sum of nums[0..i]. Each next prefix value should reuse the previous accumulated sum.",
+    lesson: [
+      "A prefix sum stores the total of everything before a position. The initial zero represents the sum before the array starts.",
+      "Each next entry is built from the previous prefix plus the current number, so no range needs to be recomputed from scratch.",
+      "The extra leading zero makes range sums convenient: the sum from left to right can be expressed as the difference between two prefix values.",
+      "This primitive is useful whenever repeated range totals would otherwise make a solution too slow.",
+    ],
     functionName: "buildPrefixSums",
     starterCode: `function buildPrefixSums(nums) {
   // implement me
