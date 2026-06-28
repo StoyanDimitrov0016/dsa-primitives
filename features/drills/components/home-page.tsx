@@ -23,7 +23,7 @@ export function HomePage({ drillGroups, drills }: HomePageProps) {
   return (
     <div className="min-h-full">
       <section className="grid min-h-full grid-cols-1 border-b lg:grid-cols-[minmax(0,1fr)_minmax(420px,0.78fr)]">
-        <div className="flex flex-col justify-center px-6 py-16 md:px-12 lg:py-24">
+        <div className="flex flex-col justify-center px-6 py-14 md:px-12 lg:py-20">
           <div className="mb-8 flex items-center gap-4">
             <span className="text-xs font-semibold tracking-[0.28em] text-primary uppercase">
               DSA training ground
@@ -31,11 +31,11 @@ export function HomePage({ drillGroups, drills }: HomePageProps) {
             <div className="h-px w-16 bg-primary/40" />
           </div>
 
-          <h1 className="max-w-3xl text-5xl leading-[1.02] font-semibold tracking-normal text-balance md:text-7xl">
+          <h1 className="max-w-3xl text-4xl leading-[1.04] font-semibold tracking-normal text-balance md:text-6xl">
             Stop thinking about the <span className="font-mono text-primary">primitives.</span>
           </h1>
 
-          <p className="mt-8 max-w-xl text-lg leading-8 text-muted-foreground">
+          <p className="mt-7 max-w-xl text-base leading-7 text-muted-foreground md:text-lg md:leading-8">
             Drill the building blocks until binary search, traversal, windows, pointers, and
             prefixes become reflex. Then the real problem gets your full attention.
           </p>

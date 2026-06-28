@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ChevronDown, FileCode2 } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
@@ -58,23 +58,21 @@ export function PrimitiveSidebar({
                       groupDrills.map((drill) => (
                         <Link
                           className={cn(
-                            "flex h-9 items-center gap-2 rounded-md px-3 text-sm transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                            "flex h-9 items-center rounded-md px-3 text-sm transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
                             selectedDrill.id === drill.id &&
                               "bg-sidebar-accent font-medium text-sidebar-accent-foreground"
                           )}
                           href={`/practice/${drill.groupId}/${drill.id}`}
                           key={drill.id}
                         >
-                          <FileCode2 className="size-4 shrink-0" />
                           <span className="truncate">{drill.title}</span>
                         </Link>
                       ))
                     ) : (
                       <div
                         aria-disabled
-                        className="flex h-9 items-center gap-2 rounded-md px-3 text-sm text-muted-foreground"
+                        className="flex h-9 items-center rounded-md px-3 text-sm text-muted-foreground"
                       >
-                        <FileCode2 className="size-4 shrink-0" />
                         <span>Planned</span>
                       </div>
                     )}
