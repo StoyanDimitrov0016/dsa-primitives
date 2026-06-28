@@ -42,4 +42,4 @@ export type RunState =
   | { status: "failed"; results: RunResult[]; durationMs: number }
   | { status: "error"; message: string; durationMs?: number };
 
-export type Theme = "light" | "dark";
+export type { Theme } from "@/lib/theme";
