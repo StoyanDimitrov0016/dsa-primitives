@@ -75,11 +75,11 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
   async function runTests() {
     setRunState({ status: "running" });
     const cases = [
-      ...selectedDrill.visibleCases.map((testCase) => ({
+      ...selectedDrill.cases.visible.map((testCase) => ({
         ...testCase,
         kind: "visible" as const,
       })),
-      ...selectedDrill.hiddenCases.map((testCase) => ({
+      ...selectedDrill.cases.hidden.map((testCase) => ({
         ...testCase,
         kind: "hidden" as const,
       })),

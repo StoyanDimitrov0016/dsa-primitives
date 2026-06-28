@@ -6,6 +6,22 @@ export type DrillCase = {
 
 export type DrillComparison = "deepEqual" | "unorderedArray";
 
+export type DrillLessonBlock =
+  | {
+      type: "paragraph";
+      text: string;
+    }
+  | {
+      type: "principle";
+      title: string;
+      text: string;
+    }
+  | {
+      type: "steps";
+      title: string;
+      items: string[];
+    };
+
 export type Drill = {
   id: string;
   groupId: string;
@@ -13,12 +29,20 @@ export type Drill = {
   category: string;
   summary: string;
   prompt: string;
-  lesson: string[];
-  functionName: string;
-  comparison?: DrillComparison;
+  lesson: DrillLessonBlock[];
+  contract: {
+    functionName: string;
+    parameters: string[];
+    returns: string;
+  };
+  assertion?: {
+    comparison: DrillComparison;
+  };
   starterCode: string;
-  visibleCases: DrillCase[];
-  hiddenCases: DrillCase[];
+  cases: {
+    visible: DrillCase[];
+    hidden: DrillCase[];
+  };
 };
 
 export type DrillGroup = {

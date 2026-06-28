@@ -33,20 +33,24 @@ export function validateDrillCatalog({ drillGroups, drills }: ValidateDrillCatal
     assertCatalog(!routeIds.has(routeId), `duplicate drill route "${routeId}"`);
     assertCatalog(groupIds.has(drill.groupId), `missing group "${drill.groupId}"`);
     assertCatalog(
-      drill.functionName.trim().length > 0,
+      drill.contract.functionName.trim().length > 0,
       `function name is required for "${drill.id}"`
     );
     assertCatalog(
-      drill.starterCode.includes(drill.functionName),
-      `starter code for "${drill.id}" must include "${drill.functionName}"`
+      drill.starterCode.includes(drill.contract.functionName),
+      `starter code for "${drill.id}" must include "${drill.contract.functionName}"`
     );
     assertCatalog(
-      drill.visibleCases.length > 0,
+      drill.cases.visible.length > 0,
       `at least one visible case is required for "${drill.id}"`
     );
     assertCatalog(
-      drill.hiddenCases.length > 0,
+      drill.cases.hidden.length > 0,
       `at least one hidden case is required for "${drill.id}"`
+    );
+    assertCatalog(
+      drill.lesson.length > 0,
+      `at least one lesson block is required for "${drill.id}"`
     );
 
     drillIds.add(drill.id);

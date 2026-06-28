@@ -42,7 +42,7 @@ export function ConsolePanel({ drill, runState, theme }: ConsolePanelProps) {
               <p className="text-muted-foreground">Run tests to inspect output.</p>
               <div className="space-y-2">
                 <p className="text-muted-foreground">Visible tests:</p>
-                {drill.visibleCases.map((testCase) => (
+                {drill.cases.visible.map((testCase) => (
                   <div
                     className="rounded-md border border-[var(--console-border)] bg-[var(--console-card)] p-3"
                     key={testCase.name}
