@@ -56,6 +56,10 @@ export function HomePage({ drillGroups, drills }: HomePageProps) {
           <p className="mt-8 font-mono text-sm text-muted-foreground">
             {activeGroupCount} active groups / {drills.length} drills
           </p>
+
+          <div className="mt-10 lg:hidden">
+            <HomeCodePreview />
+          </div>
         </div>
 
         <div className="hidden items-center justify-center border-l bg-muted/20 px-6 lg:flex xl:px-10">
