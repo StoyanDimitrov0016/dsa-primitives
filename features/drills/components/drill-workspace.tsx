@@ -7,13 +7,20 @@ import babelPlugin from "prettier/plugins/babel";
 import estreePlugin from "prettier/plugins/estree";
 import { Button } from "@/components/ui/button";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import { THEME_STORAGE_KEY } from "../constants";
 import { runInWorker } from "../lib/runner";
 import type { Drill, DrillGroup, RunState, Theme } from "../types";
 import { ConsolePanel } from "./console-panel";
 import { DrillHeader } from "./drill-header";
 import { IconButton } from "./icon-button";
-import { PrimitiveSidebar } from "./primitive-sidebar";
+import { PrimitiveMobileNavigation, PrimitiveSidebar } from "./primitive-sidebar";
 import { SolutionEditor } from "./solution-editor";
 import { VisibleTestsPanel } from "./visible-tests-panel";
 
@@ -45,6 +52,7 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
   );
   const [runState, setRunState] = useState<RunState>({ status: "idle" });
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isMobileNavigationOpen, setIsMobileNavigationOpen] = useState(false);
 
   const code = solutions[selectedDrill.id] ?? selectedDrill.starterCode;
 
@@ -110,6 +118,23 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
 
   return (
     <div className="flex h-full min-h-0 overflow-hidden">
+      <Sheet onOpenChange={setIsMobileNavigationOpen} open={isMobileNavigationOpen}>
+        <SheetContent className="gap-0 p-0 md:hidden" side="left">
+          <SheetHeader className="border-b">
+            <SheetTitle>Drills</SheetTitle>
+            <SheetDescription>Select a primitive to practice.</SheetDescription>
+          </SheetHeader>
+          <PrimitiveMobileNavigation
+            drillGroups={drillGroups}
+            drills={drills}
+            onDrillSelect={() => setIsMobileNavigationOpen(false)}
+            onGroupOpenChange={updateGroupOpen}
+            openGroups={openGroups}
+            selectedDrill={selectedDrill}
+          />
+        </SheetContent>
+      </Sheet>
+
       <PrimitiveSidebar
         drillGroups={drillGroups}
         drills={drills}
@@ -127,6 +152,7 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
                 <DrillHeader
                   drill={selectedDrill}
                   isSidebarOpen={isSidebarOpen}
+                  onOpenMobileNavigation={() => setIsMobileNavigationOpen(true)}
                   onToggleSidebar={() => setIsSidebarOpen((current) => !current)}
                 />
                 <div className="flex shrink-0 flex-col border-b">

@@ -1,4 +1,4 @@
-import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { Menu, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import type { Drill } from "../types";
 import { IconButton } from "./icon-button";
@@ -6,15 +6,28 @@ import { IconButton } from "./icon-button";
 type DrillHeaderProps = {
   drill: Drill;
   isSidebarOpen: boolean;
+  onOpenMobileNavigation: () => void;
   onToggleSidebar: () => void;
 };
 
-export function DrillHeader({ drill, isSidebarOpen, onToggleSidebar }: DrillHeaderProps) {
+export function DrillHeader({
+  drill,
+  isSidebarOpen,
+  onOpenMobileNavigation,
+  onToggleSidebar,
+}: DrillHeaderProps) {
   const ToggleIcon = isSidebarOpen ? PanelLeftClose : PanelLeftOpen;
 
   return (
     <div className="flex shrink-0 flex-col gap-3 border-b px-4 py-3">
       <div className="flex flex-wrap items-center gap-2">
+        <IconButton
+          className="md:hidden"
+          label="Open drill navigation"
+          onClick={onOpenMobileNavigation}
+        >
+          <Menu className="size-4" />
+        </IconButton>
         <IconButton
           className="hidden md:inline-flex"
           label={isSidebarOpen ? "Collapse drills sidebar" : "Expand drills sidebar"}
