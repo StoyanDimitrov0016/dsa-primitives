@@ -17,12 +17,5 @@ export default async function PracticePage({ params }: PracticePageProps) {
     notFound();
   }
 
-  return (
-    <DrillWorkspace
-      drillGroups={drillGroups}
-      drills={drills}
-      key={selectedDrill.id}
-      selectedDrill={selectedDrill}
-    />
-  );
+  return <DrillWorkspace drillGroups={drillGroups} drills={drills} selectedDrill={selectedDrill} />;
 }

@@ -7,7 +7,7 @@ import babelPlugin from "prettier/plugins/babel";
 import estreePlugin from "prettier/plugins/estree";
 import { Button } from "@/components/ui/button";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
-import { DEFAULT_OPEN_GROUP_IDS, THEME_STORAGE_KEY } from "../constants";
+import { THEME_STORAGE_KEY } from "../constants";
 import { runInWorker } from "../lib/runner";
 import type { Drill, DrillGroup, RunState, Theme } from "../types";
 import { ConsolePanel } from "./console-panel";
@@ -38,7 +38,6 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
     return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
   });
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({
-    ...Object.fromEntries(DEFAULT_OPEN_GROUP_IDS.map((groupId) => [groupId, true])),
     [selectedDrill.groupId]: true,
   });
   const [solutions, setSolutions] = useState<Record<string, string>>(() =>
