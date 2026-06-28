@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Code2, PanelRightClose, PanelRightOpen, Play, RotateCcw } from "lucide-react";
+import { Code2, Play, RotateCcw } from "lucide-react";
 import prettier from "prettier/standalone";
 import babelPlugin from "prettier/plugins/babel";
 import estreePlugin from "prettier/plugins/estree";
@@ -141,8 +141,8 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
       <Sheet onOpenChange={setIsMobileReferenceOpen} open={isMobileReferenceOpen}>
         <SheetContent className="gap-0 p-0 xl:hidden" side="right">
           <SheetHeader className="border-b">
-            <SheetTitle>Reference</SheetTitle>
-            <SheetDescription>Review the pattern and visible tests.</SheetDescription>
+            <SheetTitle>Lesson</SheetTitle>
+            <SheetDescription>Review the pattern behind this primitive.</SheetDescription>
           </SheetHeader>
           <DrillReferenceContent drill={selectedDrill} />
         </SheetContent>
@@ -170,7 +170,10 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
                 <DrillHeader
                   drill={selectedDrill}
                   isSidebarOpen={isSidebarOpen}
+                  isReferencePanelOpen={isReferencePanelOpen}
                   onOpenMobileNavigation={() => setIsMobileNavigationOpen(true)}
+                  onOpenMobileReference={() => setIsMobileReferenceOpen(true)}
+                  onToggleReferencePanel={() => setIsReferencePanelOpen((current) => !current)}
                   onToggleSidebar={() => setIsSidebarOpen((current) => !current)}
                 />
                 <div className="flex shrink-0 flex-col border-b">
@@ -182,28 +185,6 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
                       </IconButton>
                       <IconButton label="Reset solution" onClick={resetCode}>
                         <RotateCcw className="size-4" />
-                      </IconButton>
-                      <IconButton
-                        className="xl:hidden"
-                        label="Open reference"
-                        onClick={() => setIsMobileReferenceOpen(true)}
-                      >
-                        <PanelRightOpen className="size-4" />
-                      </IconButton>
-                      <IconButton
-                        className="hidden xl:inline-flex"
-                        label={
-                          isReferencePanelOpen
-                            ? "Collapse reference panel"
-                            : "Expand reference panel"
-                        }
-                        onClick={() => setIsReferencePanelOpen((current) => !current)}
-                      >
-                        {isReferencePanelOpen ? (
-                          <PanelRightClose className="size-4" />
-                        ) : (
-                          <PanelRightOpen className="size-4" />
-                        )}
                       </IconButton>
                       <Button
                         className="gap-2"
@@ -222,7 +203,7 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
             </ResizablePanel>
             <ResizableHandle withHandle />
             <ResizablePanel className="min-h-0 overflow-hidden" defaultSize={28} minSize={18}>
-              <ConsolePanel runState={runState} theme={theme} />
+              <ConsolePanel drill={selectedDrill} runState={runState} theme={theme} />
             </ResizablePanel>
           </ResizablePanelGroup>
 

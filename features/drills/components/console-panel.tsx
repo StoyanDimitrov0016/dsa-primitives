@@ -4,14 +4,15 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { formatValue } from "../lib/format-value";
 import { getResultTextClassName, getStatusClassName, getStatusLabel } from "../lib/run-status";
-import type { RunState, Theme } from "../types";
+import type { Drill, RunState, Theme } from "../types";
 
 type ConsolePanelProps = {
+  drill: Drill;
   runState: RunState;
   theme: Theme;
 };
 
-export function ConsolePanel({ runState, theme }: ConsolePanelProps) {
+export function ConsolePanel({ drill, runState, theme }: ConsolePanelProps) {
   const results =
     runState.status === "passed" || runState.status === "failed" ? runState.results : [];
   const failedResults = results.filter((result) => !result.passed);
@@ -37,7 +38,26 @@ export function ConsolePanel({ runState, theme }: ConsolePanelProps) {
       <ScrollArea className="min-h-0 flex-1">
         <div className="space-y-3 p-3 font-mono text-xs">
           {runState.status === "idle" ? (
-            <p className="text-muted-foreground">Run tests to inspect output.</p>
+            <>
+              <p className="text-muted-foreground">Run tests to inspect output.</p>
+              <div className="space-y-2">
+                <p className="text-muted-foreground">Visible tests:</p>
+                {drill.visibleCases.map((testCase) => (
+                  <div
+                    className="rounded-md border border-[var(--console-border)] bg-[var(--console-card)] p-3"
+                    key={testCase.name}
+                  >
+                    <p className="font-semibold text-[var(--console-foreground)]">
+                      {testCase.name}
+                    </p>
+                    <div className="mt-2 space-y-1 text-muted-foreground">
+                      <p>args: {formatValue(testCase.args)}</p>
+                      <p>expected: {formatValue(testCase.expected)}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
           ) : null}
           {runState.status === "running" ? (
             <p className="text-blue-300">Executing in a disposable worker...</p>
