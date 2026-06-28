@@ -1,23 +1,15 @@
 import Link from "next/link";
 import { ChevronDown, FileCode2 } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
-  SidebarRail,
-} from "@/components/ui/sidebar";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { cn } from "@/lib/utils";
 import type { Drill, DrillGroup } from "../types";
 
 type PrimitiveSidebarProps = {
   drillGroups: DrillGroup[];
   drills: Drill[];
   selectedDrill: Drill;
+  isOpen: boolean;
   openGroups: Record<string, boolean>;
   onGroupOpenChange: (id: string, open: boolean) => void;
 };
@@ -25,69 +17,74 @@ type PrimitiveSidebarProps = {
 export function PrimitiveSidebar({
   drillGroups,
   drills,
+  isOpen,
   selectedDrill,
   openGroups,
   onGroupOpenChange,
 }: PrimitiveSidebarProps) {
-  return (
-    <Sidebar collapsible="icon">
-      <SidebarContent className="pt-3">
-        {drillGroups.map((group) => {
-          const groupDrills = drills.filter((drill) => drill.groupId === group.id);
-          const hasActiveDrill = groupDrills.some((drill) => drill.id === selectedDrill.id);
+  if (!isOpen) {
+    return null;
+  }
 
-          return (
-            <Collapsible
-              className="group/collapsible"
-              key={group.id}
-              onOpenChange={(open) => onGroupOpenChange(group.id, open)}
-              open={openGroups[group.id] ?? hasActiveDrill}
-            >
-              <SidebarGroup>
+  return (
+    <aside className="hidden w-64 shrink-0 border-r bg-sidebar text-sidebar-foreground md:flex md:flex-col">
+      <ScrollArea className="min-h-0 flex-1">
+        <div className="space-y-5 p-4">
+          {drillGroups.map((group) => {
+            const groupDrills = drills.filter((drill) => drill.groupId === group.id);
+            const hasActiveDrill = groupDrills.some((drill) => drill.id === selectedDrill.id);
+
+            return (
+              <Collapsible
+                className="group/collapsible"
+                key={group.id}
+                onOpenChange={(open) => onGroupOpenChange(group.id, open)}
+                open={openGroups[group.id] ?? hasActiveDrill}
+              >
                 <CollapsibleTrigger
-                  nativeButton={false}
                   render={
-                    <SidebarGroupLabel className="cursor-pointer">
+                    <button
+                      className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left text-sm font-medium text-sidebar-foreground/80 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                      type="button"
+                    >
                       <span>{group.title}</span>
                       <ChevronDown className="ml-auto size-4 transition-transform group-data-[panel-open]/collapsible:rotate-180" />
-                    </SidebarGroupLabel>
+                    </button>
                   }
                 />
                 <CollapsibleContent>
-                  <SidebarGroupContent>
-                    <SidebarMenuSub>
-                      {groupDrills.length > 0 ? (
-                        groupDrills.map((drill) => (
-                          <SidebarMenuSubItem key={drill.id}>
-                            <SidebarMenuSubButton
-                              isActive={selectedDrill.id === drill.id}
-                              render={<Link href={`/practice/${drill.groupId}/${drill.id}`} />}
-                            >
-                              <FileCode2 className="size-4" />
-                              <span>{drill.title}</span>
-                            </SidebarMenuSubButton>
-                          </SidebarMenuSubItem>
-                        ))
-                      ) : (
-                        <SidebarMenuSubItem>
-                          <SidebarMenuSubButton
-                            aria-disabled
-                            render={<button disabled type="button" />}
-                          >
-                            <FileCode2 className="size-4" />
-                            <span>Planned</span>
-                          </SidebarMenuSubButton>
-                        </SidebarMenuSubItem>
-                      )}
-                    </SidebarMenuSub>
-                  </SidebarGroupContent>
+                  <div className="ml-3 mt-2 space-y-1 border-l px-3">
+                    {groupDrills.length > 0 ? (
+                      groupDrills.map((drill) => (
+                        <Link
+                          className={cn(
+                            "flex h-9 items-center gap-2 rounded-md px-3 text-sm transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                            selectedDrill.id === drill.id &&
+                              "bg-sidebar-accent font-medium text-sidebar-accent-foreground"
+                          )}
+                          href={`/practice/${drill.groupId}/${drill.id}`}
+                          key={drill.id}
+                        >
+                          <FileCode2 className="size-4 shrink-0" />
+                          <span className="truncate">{drill.title}</span>
+                        </Link>
+                      ))
+                    ) : (
+                      <div
+                        aria-disabled
+                        className="flex h-9 items-center gap-2 rounded-md px-3 text-sm text-muted-foreground"
+                      >
+                        <FileCode2 className="size-4 shrink-0" />
+                        <span>Planned</span>
+                      </div>
+                    )}
+                  </div>
                 </CollapsibleContent>
-              </SidebarGroup>
-            </Collapsible>
-          );
-        })}
-      </SidebarContent>
-      <SidebarRail />
-    </Sidebar>
+              </Collapsible>
+            );
+          })}
+        </div>
+      </ScrollArea>
+    </aside>
   );
 }

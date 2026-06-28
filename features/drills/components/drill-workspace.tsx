@@ -7,11 +7,9 @@ import babelPlugin from "prettier/plugins/babel";
 import estreePlugin from "prettier/plugins/estree";
 import { Button } from "@/components/ui/button";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { DEFAULT_OPEN_GROUP_IDS, THEME_STORAGE_KEY } from "../constants";
 import { runInWorker } from "../lib/runner";
 import type { Drill, DrillGroup, RunState, Theme } from "../types";
-import { AppHeader } from "./app-header";
 import { ConsolePanel } from "./console-panel";
 import { DrillHeader } from "./drill-header";
 import { IconButton } from "./icon-button";
@@ -26,7 +24,7 @@ type DrillWorkspaceProps = {
 };
 
 export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWorkspaceProps) {
-  const [theme, setTheme] = useState<Theme>(() => {
+  const [theme] = useState<Theme>(() => {
     if (typeof window === "undefined") {
       return "dark";
     }
@@ -47,6 +45,7 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
     Object.fromEntries(drills.map((drill) => [drill.id, drill.starterCode]))
   );
   const [runState, setRunState] = useState<RunState>({ status: "idle" });
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const code = solutions[selectedDrill.id] ?? selectedDrill.starterCode;
 
@@ -110,28 +109,27 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
     setOpenGroups((current) => ({ ...current, [groupId]: open }));
   }
 
-  function toggleTheme() {
-    setTheme((current) => (current === "dark" ? "light" : "dark"));
-  }
-
   return (
-    <SidebarProvider className="h-screen min-h-0 overflow-hidden">
+    <div className="flex h-full min-h-0 overflow-hidden">
       <PrimitiveSidebar
         drillGroups={drillGroups}
         drills={drills}
+        isOpen={isSidebarOpen}
         onGroupOpenChange={updateGroupOpen}
         openGroups={openGroups}
         selectedDrill={selectedDrill}
       />
 
-      <SidebarInset className="min-h-0 overflow-hidden">
-        <AppHeader onToggleTheme={toggleTheme} theme={theme} />
-
-        <div className="grid min-h-0 flex-1 overflow-hidden xl:grid-cols-[minmax(0,1fr)_320px]">
+      <section className="min-w-0 flex-1 overflow-hidden">
+        <div className="grid h-full min-h-0 overflow-hidden xl:grid-cols-[minmax(0,1fr)_320px]">
           <ResizablePanelGroup className="h-full min-h-0 overflow-hidden" orientation="vertical">
             <ResizablePanel className="min-h-0 overflow-hidden" defaultSize={72} minSize={42}>
               <div className="flex h-full min-h-0 flex-col overflow-hidden">
-                <DrillHeader drill={selectedDrill} />
+                <DrillHeader
+                  drill={selectedDrill}
+                  isSidebarOpen={isSidebarOpen}
+                  onToggleSidebar={() => setIsSidebarOpen((current) => !current)}
+                />
                 <div className="flex shrink-0 flex-col border-b">
                   <div className="flex h-11 items-center justify-between px-3">
                     <div className="text-sm font-medium">Solution</div>
@@ -165,7 +163,7 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
 
           <VisibleTestsPanel drill={selectedDrill} />
         </div>
-      </SidebarInset>
-    </SidebarProvider>
+      </section>
+    </div>
   );
 }

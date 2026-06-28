@@ -1,6 +1,6 @@
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { DrillWorkspace } from "@/app/drill-workspace";
-import { defaultDrill, drillGroups, drills, getDrillByRoute } from "@/app/drills";
+import { drillGroups, drills, getDrillByRoute } from "@/app/drills";
 
 type PracticePageProps = {
   params: Promise<{
@@ -14,7 +14,7 @@ export default async function PracticePage({ params }: PracticePageProps) {
   const selectedDrill = getDrillByRoute(category, primitive);
 
   if (!selectedDrill) {
-    redirect(`/practice/${defaultDrill.groupId}/${defaultDrill.id}`);
+    notFound();
   }
 
   return (
