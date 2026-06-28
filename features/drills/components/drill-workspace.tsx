@@ -19,7 +19,7 @@ import { THEME_STORAGE_KEY } from "../constants";
 import { runInWorker } from "../lib/runner";
 import type { Drill, DrillGroup, RunState, Theme } from "../types";
 import { ConsolePanel } from "./console-panel";
-import { DrillReferencePanel } from "./drill-reference-panel";
+import { DrillReferenceContent, DrillReferencePanel } from "./drill-reference-panel";
 import { DrillHeader } from "./drill-header";
 import { IconButton } from "./icon-button";
 import { PrimitiveMobileNavigation, PrimitiveSidebar } from "./primitive-sidebar";
@@ -54,6 +54,7 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
   const [runState, setRunState] = useState<RunState>({ status: "idle" });
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isMobileNavigationOpen, setIsMobileNavigationOpen] = useState(false);
+  const [isMobileReferenceOpen, setIsMobileReferenceOpen] = useState(false);
   const [isReferencePanelOpen, setIsReferencePanelOpen] = useState(true);
 
   const code = solutions[selectedDrill.id] ?? selectedDrill.starterCode;
@@ -137,6 +138,16 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
         </SheetContent>
       </Sheet>
 
+      <Sheet onOpenChange={setIsMobileReferenceOpen} open={isMobileReferenceOpen}>
+        <SheetContent className="gap-0 p-0 xl:hidden" side="right">
+          <SheetHeader className="border-b">
+            <SheetTitle>Reference</SheetTitle>
+            <SheetDescription>Review the pattern and visible tests.</SheetDescription>
+          </SheetHeader>
+          <DrillReferenceContent drill={selectedDrill} />
+        </SheetContent>
+      </Sheet>
+
       <PrimitiveSidebar
         drillGroups={drillGroups}
         drills={drills}
@@ -171,6 +182,13 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
                       </IconButton>
                       <IconButton label="Reset solution" onClick={resetCode}>
                         <RotateCcw className="size-4" />
+                      </IconButton>
+                      <IconButton
+                        className="xl:hidden"
+                        label="Open reference"
+                        onClick={() => setIsMobileReferenceOpen(true)}
+                      >
+                        <PanelRightOpen className="size-4" />
                       </IconButton>
                       <IconButton
                         className="hidden xl:inline-flex"
