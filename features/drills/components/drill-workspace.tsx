@@ -7,15 +7,23 @@ import babelPlugin from "prettier/plugins/babel";
 import estreePlugin from "prettier/plugins/estree";
 import { Button } from "@/components/ui/button";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
 import { THEME_STORAGE_KEY } from "../constants";
 import { runInWorker } from "../lib/runner";
 import type { Drill, DrillGroup, RunState, Theme } from "../types";
 import { ConsolePanel } from "./console-panel";
+import { DrillReferenceContent, DrillReferencePanel } from "./drill-reference-panel";
 import { DrillHeader } from "./drill-header";
 import { IconButton } from "./icon-button";
-import { PrimitiveSidebar } from "./primitive-sidebar";
+import { PrimitiveMobileNavigation, PrimitiveSidebar } from "./primitive-sidebar";
 import { SolutionEditor } from "./solution-editor";
-import { VisibleTestsPanel } from "./visible-tests-panel";
 
 type DrillWorkspaceProps = {
   drillGroups: DrillGroup[];
@@ -45,6 +53,9 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
   );
   const [runState, setRunState] = useState<RunState>({ status: "idle" });
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isMobileNavigationOpen, setIsMobileNavigationOpen] = useState(false);
+  const [isMobileReferenceOpen, setIsMobileReferenceOpen] = useState(false);
+  const [isReferencePanelOpen, setIsReferencePanelOpen] = useState(true);
 
   const code = solutions[selectedDrill.id] ?? selectedDrill.starterCode;
 
@@ -64,11 +75,11 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
   async function runTests() {
     setRunState({ status: "running" });
     const cases = [
-      ...selectedDrill.visibleCases.map((testCase) => ({
+      ...selectedDrill.cases.visible.map((testCase) => ({
         ...testCase,
         kind: "visible" as const,
       })),
-      ...selectedDrill.hiddenCases.map((testCase) => ({
+      ...selectedDrill.cases.hidden.map((testCase) => ({
         ...testCase,
         kind: "hidden" as const,
       })),
@@ -110,6 +121,29 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
 
   return (
     <div className="flex h-full min-h-0 overflow-hidden">
+      <Sheet onOpenChange={setIsMobileNavigationOpen} open={isMobileNavigationOpen}>
+        <SheetContent className="gap-0 p-0 md:hidden" side="left">
+          <SheetHeader className="border-b">
+            <SheetTitle>Drills</SheetTitle>
+            <SheetDescription>Select a primitive to practice.</SheetDescription>
+          </SheetHeader>
+          <PrimitiveMobileNavigation
+            drillGroups={drillGroups}
+            drills={drills}
+            onDrillSelect={() => setIsMobileNavigationOpen(false)}
+            onGroupOpenChange={updateGroupOpen}
+            openGroups={openGroups}
+            selectedDrill={selectedDrill}
+          />
+        </SheetContent>
+      </Sheet>
+
+      <Sheet onOpenChange={setIsMobileReferenceOpen} open={isMobileReferenceOpen}>
+        <SheetContent className="gap-0 p-0 xl:hidden" side="right">
+          <DrillReferenceContent drill={selectedDrill} />
+        </SheetContent>
+      </Sheet>
+
       <PrimitiveSidebar
         drillGroups={drillGroups}
         drills={drills}
@@ -120,13 +154,22 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
       />
 
       <section className="min-w-0 flex-1 overflow-hidden">
-        <div className="grid h-full min-h-0 overflow-hidden xl:grid-cols-[minmax(0,1fr)_320px]">
+        <div
+          className={cn(
+            "grid h-full min-h-0 overflow-hidden",
+            isReferencePanelOpen && "xl:grid-cols-[minmax(0,1fr)_320px]"
+          )}
+        >
           <ResizablePanelGroup className="h-full min-h-0 overflow-hidden" orientation="vertical">
             <ResizablePanel className="min-h-0 overflow-hidden" defaultSize={72} minSize={42}>
               <div className="flex h-full min-h-0 flex-col overflow-hidden">
                 <DrillHeader
                   drill={selectedDrill}
                   isSidebarOpen={isSidebarOpen}
+                  isReferencePanelOpen={isReferencePanelOpen}
+                  onOpenMobileNavigation={() => setIsMobileNavigationOpen(true)}
+                  onOpenMobileReference={() => setIsMobileReferenceOpen(true)}
+                  onToggleReferencePanel={() => setIsReferencePanelOpen((current) => !current)}
                   onToggleSidebar={() => setIsSidebarOpen((current) => !current)}
                 />
                 <div className="flex shrink-0 flex-col border-b">
@@ -156,11 +199,11 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
             </ResizablePanel>
             <ResizableHandle withHandle />
             <ResizablePanel className="min-h-0 overflow-hidden" defaultSize={28} minSize={18}>
-              <ConsolePanel runState={runState} theme={theme} />
+              <ConsolePanel drill={selectedDrill} runState={runState} theme={theme} />
             </ResizablePanel>
           </ResizablePanelGroup>
 
-          <VisibleTestsPanel drill={selectedDrill} />
+          {isReferencePanelOpen ? <DrillReferencePanel drill={selectedDrill} /> : null}
         </div>
       </section>
     </div>

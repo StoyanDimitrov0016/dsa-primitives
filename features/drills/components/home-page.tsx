@@ -21,8 +21,8 @@ export function HomePage({ drillGroups, drills }: HomePageProps) {
   ).length;
 
   return (
-    <div className="min-h-full">
-      <section className="grid min-h-full grid-cols-1 border-b lg:grid-cols-[minmax(0,1fr)_minmax(420px,0.78fr)]">
+    <div className="min-h-[calc(100dvh-3.5rem)]">
+      <section className="grid min-h-[calc(100dvh-3.5rem)] grid-cols-1 border-b lg:grid-cols-[minmax(0,1fr)_minmax(420px,0.78fr)]">
         <div className="flex flex-col justify-center px-6 py-14 md:px-12 lg:py-20">
           <div className="mb-8 flex items-center gap-4">
             <span className="text-xs font-semibold tracking-[0.28em] text-primary uppercase">
@@ -56,6 +56,10 @@ export function HomePage({ drillGroups, drills }: HomePageProps) {
           <p className="mt-8 font-mono text-sm text-muted-foreground">
             {activeGroupCount} active groups / {drills.length} drills
           </p>
+
+          <div className="mt-10 lg:hidden">
+            <HomeCodePreview />
+          </div>
         </div>
 
         <div className="hidden items-center justify-center border-l bg-muted/20 px-6 lg:flex xl:px-10">

@@ -52,8 +52,8 @@ export function runInWorker(
 
     worker.postMessage({
       code,
-      comparison: drill.comparison ?? "deepEqual",
-      functionName: drill.functionName,
+      comparison: drill.assertion?.comparison ?? "deepEqual",
+      functionName: drill.contract.functionName,
       cases,
     });
   });

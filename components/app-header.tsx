@@ -45,7 +45,7 @@ export function AppHeader() {
       </Link>
 
       <div className="flex items-center gap-3">
-        <nav className="hidden items-center gap-4 text-sm text-muted-foreground md:flex">
+        <nav className="flex items-center gap-3 text-sm text-muted-foreground md:gap-4">
           {navigationItems.map((item) => {
             const isActive =
               pathname === item.href ||
@@ -64,9 +64,6 @@ export function AppHeader() {
               </Link>
             );
           })}
-          <span className="cursor-not-allowed opacity-50" title="Under construction">
-            Progress
-          </span>
         </nav>
 
         <Tooltip>
