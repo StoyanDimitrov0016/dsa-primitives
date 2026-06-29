@@ -1,10 +1,12 @@
 import { arrayDrills } from "./groups/arrays";
 import { graphDrills } from "./groups/graphs";
 import { drillGroups as authoredDrillGroups } from "./groups/groups";
+import { linkedListDrills } from "./groups/linked-lists";
 import { searchingDrills } from "./groups/searching";
 import { slidingWindowDrills } from "./groups/sliding-window";
 import { sortingDrills } from "./groups/sorting";
 import { treeDrills } from "./groups/trees";
+import { twoPointerDrills } from "./groups/two-pointers";
 import { DrillGroupSchema, DrillSchema } from "./schemas";
 import type { Drill, DrillGroup } from "./types";
 import { hasCustomValidator } from "./validators";
@@ -68,6 +70,8 @@ const catalog = validateCatalog({
     ...searchingDrills,
     ...arrayDrills,
     ...slidingWindowDrills,
+    ...twoPointerDrills,
+    ...linkedListDrills,
     ...treeDrills,
     ...graphDrills,
     ...sortingDrills,

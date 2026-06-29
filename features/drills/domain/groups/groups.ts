@@ -17,9 +17,14 @@ export const drillGroups = [
     description: "Maintain a moving range without rescanning the same values.",
   }),
   defineDrillGroup({
+    id: "two-pointers",
+    title: "Two Pointers",
+    description: "Move paired indices through arrays and strings with purpose.",
+  }),
+  defineDrillGroup({
     id: "linked-lists",
     title: "Linked Lists",
-    description: "Pointer-based list primitives planned for a later pass.",
+    description: "Manipulate node chains by rewiring next pointers.",
   }),
   defineDrillGroup({
     id: "trees",
