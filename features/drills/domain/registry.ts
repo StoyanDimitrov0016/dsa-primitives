@@ -4,6 +4,7 @@ import { searchingDrills } from "./groups/searching";
 import { treeDrills } from "./groups/trees";
 import { DrillGroupSchema, DrillSchema } from "./schemas";
 import type { Drill, DrillGroup } from "./types";
+import { hasCustomValidator } from "./validators";
 
 type ValidateCatalogInput = {
   drillGroups: DrillGroup[];
@@ -41,6 +42,11 @@ function validateCatalog({ drillGroups, drills }: ValidateCatalogInput) {
     assertCatalog(
       drill.starterCode.includes(drill.contract.functionName),
       `starter code for "${drill.id}" must include "${drill.contract.functionName}"`
+    );
+    assertCatalog(
+      drill.assertion?.comparison !== "custom" ||
+        Boolean(drill.assertion.validatorName && hasCustomValidator(drill.assertion.validatorName)),
+      `custom validator for "${drill.id}" is missing or unknown`
     );
 
     drillIds.add(drill.id);
