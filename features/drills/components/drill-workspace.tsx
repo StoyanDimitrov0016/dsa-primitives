@@ -55,7 +55,7 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isMobileNavigationOpen, setIsMobileNavigationOpen] = useState(false);
   const [isMobileReferenceOpen, setIsMobileReferenceOpen] = useState(false);
-  const [isReferencePanelOpen, setIsReferencePanelOpen] = useState(true);
+  const [isReferencePanelOpen, setIsReferencePanelOpen] = useState(false);
 
   const code = solutions[selectedDrill.id] ?? selectedDrill.starterCode;
 
