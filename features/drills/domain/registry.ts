@@ -17,7 +17,7 @@ function assertCatalog(condition: boolean, message: string) {
   }
 }
 
-function validateCatalog({ drillGroups, drills }: ValidateCatalogInput) {
+export function validateCatalog({ drillGroups, drills }: ValidateCatalogInput) {
   const parsedGroups = drillGroups.map((group) => DrillGroupSchema.parse(group));
   const parsedDrills = drills.map((drill) => DrillSchema.parse(drill));
 
