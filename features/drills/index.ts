@@ -1,11 +1,23 @@
-export { defaultDrill, drillGroups, drills } from "./data";
-export { getDrillByRoute } from "./utils";
+export {
+  defaultDrill,
+  drillGroups,
+  drillRepository,
+  drills,
+  drillsByGroup,
+  getDrillByRoute,
+} from "./domain/registry";
 export type {
   Drill,
+  DrillAssertion,
   DrillCase,
   DrillComparison,
+  DrillContract,
   DrillGroup,
+  DrillKind,
+  DrillLessonBlock,
+  RunRequest,
+  RunResponse,
   RunResult,
   RunState,
   Theme,
-} from "./types";
+} from "./domain/types";
