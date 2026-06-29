@@ -1,4 +1,5 @@
 import { arrayDrills } from "./groups/arrays";
+import { graphDrills } from "./groups/graphs";
 import { drillGroups as authoredDrillGroups } from "./groups/groups";
 import { searchingDrills } from "./groups/searching";
 import { slidingWindowDrills } from "./groups/sliding-window";
@@ -68,6 +69,7 @@ const catalog = validateCatalog({
     ...arrayDrills,
     ...slidingWindowDrills,
     ...treeDrills,
+    ...graphDrills,
     ...sortingDrills,
   ],
 });

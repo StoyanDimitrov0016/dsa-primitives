@@ -27,6 +27,11 @@ export const drillGroups = [
     description: "Traverse and inspect recursive node structures.",
   }),
   defineDrillGroup({
+    id: "graphs",
+    title: "Graphs",
+    description: "Move through adjacency lists with breadth-first and depth-first search.",
+  }),
+  defineDrillGroup({
     id: "sorting",
     title: "Sorting",
     description: "Ordering primitives planned for the next catalog expansion.",
