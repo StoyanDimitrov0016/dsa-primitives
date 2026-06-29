@@ -4,7 +4,7 @@ import Editor, { type OnMount } from "@monaco-editor/react";
 import { cn } from "@/lib/utils";
 import { MONACO_DARK_THEME_ID, MONACO_LANGUAGE_ID, MONACO_LIGHT_THEME_ID } from "../constants";
 import { defineEditorTheme, editorOptions } from "../lib/editor-config";
-import type { Theme } from "../types";
+import type { Theme } from "../domain/types";
 
 type SolutionEditorProps = {
   code: string;

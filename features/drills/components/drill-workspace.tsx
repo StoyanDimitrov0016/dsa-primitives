@@ -17,7 +17,7 @@ import {
 import { cn } from "@/lib/utils";
 import { THEME_STORAGE_KEY } from "../constants";
 import { runInWorker } from "../lib/runner";
-import type { Drill, DrillGroup, RunState, Theme } from "../types";
+import type { Drill, DrillGroup, RunState, Theme } from "../domain/types";
 import { ConsolePanel } from "./console-panel";
 import { DrillReferenceContent, DrillReferencePanel } from "./drill-reference-panel";
 import { DrillHeader } from "./drill-header";

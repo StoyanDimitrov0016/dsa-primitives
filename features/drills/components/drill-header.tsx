@@ -1,7 +1,7 @@
 import { Lightbulb, Menu, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import type { Drill } from "../types";
+import type { Drill } from "../domain/types";
 import { IconButton } from "./icon-button";
 
 type DrillHeaderProps = {

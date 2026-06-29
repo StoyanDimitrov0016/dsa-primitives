@@ -1,5 +1,5 @@
 import { DRILL_RUNNER_WORKER_PATH, RUN_TIMEOUT_MS } from "../constants";
-import type { Drill, DrillCase, RunResult, RunState } from "../types";
+import type { Drill, DrillCase, RunResult, RunState } from "../domain/types";
 
 export function runInWorker(
   drill: Drill,

@@ -3,7 +3,7 @@ import { ChevronDown } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
-import type { Drill, DrillGroup } from "../types";
+import type { Drill, DrillGroup } from "../domain/types";
 
 type PrimitiveSidebarProps = {
   drillGroups: DrillGroup[];
