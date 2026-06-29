@@ -1,4 +1,4 @@
-import type { Drill } from "../types";
+import { defineFunctionDrill } from "../define-drill";
 
 const balancedTree = {
   value: 1,
@@ -28,8 +28,8 @@ const skewedTree = {
   right: null,
 };
 
-export const treeDrills: Drill[] = [
-  {
+export const treeDrills = [
+  defineFunctionDrill({
     id: "preorder-traversal",
     groupId: "trees",
     title: "Preorder Traversal",
@@ -62,37 +62,32 @@ export const treeDrills: Drill[] = [
       parameters: ["root"],
       returns: "number[]",
     },
-    starterCode: `function preorderTraversal(root) {
-  // implement me
-}`,
-    cases: {
-      visible: [
-        {
-          name: "traverses a balanced tree",
-          args: [balancedTree],
-          expected: [1, 2, 4, 5, 3, 6, 7],
-        },
-        {
-          name: "handles an empty tree",
-          args: [null],
-          expected: [],
-        },
-      ],
-      hidden: [
-        {
-          name: "handles a single node",
-          args: [{ value: 9, left: null, right: null }],
-          expected: [9],
-        },
-        {
-          name: "handles a left-skewed tree",
-          args: [skewedTree],
-          expected: [1, 2, 3],
-        },
-      ],
-    },
-  },
-  {
+    visible: [
+      {
+        name: "traverses a balanced tree",
+        args: [balancedTree],
+        expected: [1, 2, 4, 5, 3, 6, 7],
+      },
+      {
+        name: "handles an empty tree",
+        args: [null],
+        expected: [],
+      },
+    ],
+    hidden: [
+      {
+        name: "handles a single node",
+        args: [{ value: 9, left: null, right: null }],
+        expected: [9],
+      },
+      {
+        name: "handles a left-skewed tree",
+        args: [skewedTree],
+        expected: [1, 2, 3],
+      },
+    ],
+  }),
+  defineFunctionDrill({
     id: "inorder-traversal",
     groupId: "trees",
     title: "Inorder Traversal",
@@ -125,37 +120,32 @@ export const treeDrills: Drill[] = [
       parameters: ["root"],
       returns: "number[]",
     },
-    starterCode: `function inorderTraversal(root) {
-  // implement me
-}`,
-    cases: {
-      visible: [
-        {
-          name: "traverses a balanced tree",
-          args: [balancedTree],
-          expected: [4, 2, 5, 1, 6, 3, 7],
-        },
-        {
-          name: "handles an empty tree",
-          args: [null],
-          expected: [],
-        },
-      ],
-      hidden: [
-        {
-          name: "handles a single node",
-          args: [{ value: 9, left: null, right: null }],
-          expected: [9],
-        },
-        {
-          name: "handles a left-skewed tree",
-          args: [skewedTree],
-          expected: [3, 2, 1],
-        },
-      ],
-    },
-  },
-  {
+    visible: [
+      {
+        name: "traverses a balanced tree",
+        args: [balancedTree],
+        expected: [4, 2, 5, 1, 6, 3, 7],
+      },
+      {
+        name: "handles an empty tree",
+        args: [null],
+        expected: [],
+      },
+    ],
+    hidden: [
+      {
+        name: "handles a single node",
+        args: [{ value: 9, left: null, right: null }],
+        expected: [9],
+      },
+      {
+        name: "handles a left-skewed tree",
+        args: [skewedTree],
+        expected: [3, 2, 1],
+      },
+    ],
+  }),
+  defineFunctionDrill({
     id: "postorder-traversal",
     groupId: "trees",
     title: "Postorder Traversal",
@@ -188,37 +178,32 @@ export const treeDrills: Drill[] = [
       parameters: ["root"],
       returns: "number[]",
     },
-    starterCode: `function postorderTraversal(root) {
-  // implement me
-}`,
-    cases: {
-      visible: [
-        {
-          name: "traverses a balanced tree",
-          args: [balancedTree],
-          expected: [4, 5, 2, 6, 7, 3, 1],
-        },
-        {
-          name: "handles an empty tree",
-          args: [null],
-          expected: [],
-        },
-      ],
-      hidden: [
-        {
-          name: "handles a single node",
-          args: [{ value: 9, left: null, right: null }],
-          expected: [9],
-        },
-        {
-          name: "handles a left-skewed tree",
-          args: [skewedTree],
-          expected: [3, 2, 1],
-        },
-      ],
-    },
-  },
-  {
+    visible: [
+      {
+        name: "traverses a balanced tree",
+        args: [balancedTree],
+        expected: [4, 5, 2, 6, 7, 3, 1],
+      },
+      {
+        name: "handles an empty tree",
+        args: [null],
+        expected: [],
+      },
+    ],
+    hidden: [
+      {
+        name: "handles a single node",
+        args: [{ value: 9, left: null, right: null }],
+        expected: [9],
+      },
+      {
+        name: "handles a left-skewed tree",
+        args: [skewedTree],
+        expected: [3, 2, 1],
+      },
+    ],
+  }),
+  defineFunctionDrill({
     id: "level-order-traversal",
     groupId: "trees",
     title: "Level Order Traversal",
@@ -255,34 +240,29 @@ export const treeDrills: Drill[] = [
       parameters: ["root"],
       returns: "number[]",
     },
-    starterCode: `function levelOrderTraversal(root) {
-  // implement me
-}`,
-    cases: {
-      visible: [
-        {
-          name: "traverses a balanced tree",
-          args: [balancedTree],
-          expected: [1, 2, 3, 4, 5, 6, 7],
-        },
-        {
-          name: "handles an empty tree",
-          args: [null],
-          expected: [],
-        },
-      ],
-      hidden: [
-        {
-          name: "handles a single node",
-          args: [{ value: 9, left: null, right: null }],
-          expected: [9],
-        },
-        {
-          name: "handles a left-skewed tree",
-          args: [skewedTree],
-          expected: [1, 2, 3],
-        },
-      ],
-    },
-  },
+    visible: [
+      {
+        name: "traverses a balanced tree",
+        args: [balancedTree],
+        expected: [1, 2, 3, 4, 5, 6, 7],
+      },
+      {
+        name: "handles an empty tree",
+        args: [null],
+        expected: [],
+      },
+    ],
+    hidden: [
+      {
+        name: "handles a single node",
+        args: [{ value: 9, left: null, right: null }],
+        expected: [9],
+      },
+      {
+        name: "handles a left-skewed tree",
+        args: [skewedTree],
+        expected: [1, 2, 3],
+      },
+    ],
+  }),
 ];

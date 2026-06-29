@@ -1,7 +1,7 @@
-import type { Drill } from "../types";
+import { defineFunctionDrill } from "../define-drill";
 
-export const arrayDrills: Drill[] = [
-  {
+export const arrayDrills = [
+  defineFunctionDrill({
     id: "two-sum-sorted",
     groupId: "arrays",
     title: "Two Sum Sorted",
@@ -35,37 +35,32 @@ export const arrayDrills: Drill[] = [
       parameters: ["nums", "target"],
       returns: "[number, number] | null",
     },
-    starterCode: `function twoSumSorted(nums, target) {
-  // implement me
-}`,
-    cases: {
-      visible: [
-        {
-          name: "finds a pair in the middle",
-          args: [[1, 2, 4, 6, 10], 8],
-          expected: [1, 3],
-        },
-        {
-          name: "returns null when no pair exists",
-          args: [[1, 2, 4, 6, 10], 99],
-          expected: null,
-        },
-      ],
-      hidden: [
-        {
-          name: "uses both edges",
-          args: [[1, 3, 4, 7, 11], 12],
-          expected: [0, 4],
-        },
-        {
-          name: "does not reuse the same element",
-          args: [[2], 4],
-          expected: null,
-        },
-      ],
-    },
-  },
-  {
+    visible: [
+      {
+        name: "finds a pair in the middle",
+        args: [[1, 2, 4, 6, 10], 8],
+        expected: [1, 3],
+      },
+      {
+        name: "returns null when no pair exists",
+        args: [[1, 2, 4, 6, 10], 99],
+        expected: null,
+      },
+    ],
+    hidden: [
+      {
+        name: "uses both edges",
+        args: [[1, 3, 4, 7, 11], 12],
+        expected: [0, 4],
+      },
+      {
+        name: "does not reuse the same element",
+        args: [[2], 4],
+        expected: null,
+      },
+    ],
+  }),
+  defineFunctionDrill({
     id: "prefix-sums",
     groupId: "arrays",
     title: "Prefix Sums",
@@ -97,29 +92,24 @@ export const arrayDrills: Drill[] = [
       parameters: ["nums"],
       returns: "number[]",
     },
-    starterCode: `function buildPrefixSums(nums) {
-  // implement me
-}`,
-    cases: {
-      visible: [
-        {
-          name: "builds cumulative values",
-          args: [[3, -1, 4, 2]],
-          expected: [0, 3, 2, 6, 8],
-        },
-        {
-          name: "handles an empty input",
-          args: [[]],
-          expected: [0],
-        },
-      ],
-      hidden: [
-        {
-          name: "handles all negative values",
-          args: [[-2, -3, -5]],
-          expected: [0, -2, -5, -10],
-        },
-      ],
-    },
-  },
+    visible: [
+      {
+        name: "builds cumulative values",
+        args: [[3, -1, 4, 2]],
+        expected: [0, 3, 2, 6, 8],
+      },
+      {
+        name: "handles an empty input",
+        args: [[]],
+        expected: [0],
+      },
+    ],
+    hidden: [
+      {
+        name: "handles all negative values",
+        args: [[-2, -3, -5]],
+        expected: [0, -2, -5, -10],
+      },
+    ],
+  }),
 ];

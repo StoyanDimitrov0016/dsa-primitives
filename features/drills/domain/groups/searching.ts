@@ -1,7 +1,7 @@
-import type { Drill } from "../types";
+import { defineFunctionDrill } from "../define-drill";
 
-export const searchingDrills: Drill[] = [
-  {
+export const searchingDrills = [
+  defineFunctionDrill({
     id: "binary-search",
     groupId: "searching",
     title: "Binary Search",
@@ -33,44 +33,39 @@ export const searchingDrills: Drill[] = [
       parameters: ["nums", "target"],
       returns: "number",
     },
-    starterCode: `function binarySearch(nums, target) {
-  // implement me
-}`,
-    cases: {
-      visible: [
-        {
-          name: "finds the middle item",
-          args: [[1, 3, 5, 7, 9], 5],
-          expected: 2,
-        },
-        {
-          name: "returns -1 when missing",
-          args: [[1, 3, 5, 7, 9], 4],
-          expected: -1,
-        },
-        {
-          name: "handles a single matching item",
-          args: [[8], 8],
-          expected: 0,
-        },
-      ],
-      hidden: [
-        {
-          name: "handles an empty array",
-          args: [[], 10],
-          expected: -1,
-        },
-        {
-          name: "finds the first item",
-          args: [[2, 4, 6, 8, 10], 2],
-          expected: 0,
-        },
-        {
-          name: "finds the last item",
-          args: [[2, 4, 6, 8, 10], 10],
-          expected: 4,
-        },
-      ],
-    },
-  },
+    visible: [
+      {
+        name: "finds the middle item",
+        args: [[1, 3, 5, 7, 9], 5],
+        expected: 2,
+      },
+      {
+        name: "returns -1 when missing",
+        args: [[1, 3, 5, 7, 9], 4],
+        expected: -1,
+      },
+      {
+        name: "handles a single matching item",
+        args: [[8], 8],
+        expected: 0,
+      },
+    ],
+    hidden: [
+      {
+        name: "handles an empty array",
+        args: [[], 10],
+        expected: -1,
+      },
+      {
+        name: "finds the first item",
+        args: [[2, 4, 6, 8, 10], 2],
+        expected: 0,
+      },
+      {
+        name: "finds the last item",
+        args: [[2, 4, 6, 8, 10], 10],
+        expected: 4,
+      },
+    ],
+  }),
 ];
