@@ -12,6 +12,11 @@ export const drillGroups = [
     description: "Build fluency with indexed sequences and accumulated state.",
   }),
   defineDrillGroup({
+    id: "sliding-window",
+    title: "Sliding Window",
+    description: "Maintain a moving range without rescanning the same values.",
+  }),
+  defineDrillGroup({
     id: "linked-lists",
     title: "Linked Lists",
     description: "Pointer-based list primitives planned for a later pass.",

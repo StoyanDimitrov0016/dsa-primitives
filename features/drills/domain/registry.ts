@@ -1,6 +1,7 @@
 import { arrayDrills } from "./groups/arrays";
 import { drillGroups as authoredDrillGroups } from "./groups/groups";
 import { searchingDrills } from "./groups/searching";
+import { slidingWindowDrills } from "./groups/sliding-window";
 import { treeDrills } from "./groups/trees";
 import { DrillGroupSchema, DrillSchema } from "./schemas";
 import type { Drill, DrillGroup } from "./types";
@@ -61,7 +62,7 @@ export function validateCatalog({ drillGroups, drills }: ValidateCatalogInput) {
 
 const catalog = validateCatalog({
   drillGroups: authoredDrillGroups,
-  drills: [...searchingDrills, ...arrayDrills, ...treeDrills],
+  drills: [...searchingDrills, ...arrayDrills, ...slidingWindowDrills, ...treeDrills],
 });
 
 export const drillRepository = {
