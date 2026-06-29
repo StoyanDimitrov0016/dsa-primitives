@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import type { Drill, DrillGroup } from "../types";
+import type { Drill, DrillGroup } from "../domain/types";
 import { HomeCodePreview } from "./home-code-preview";
 
 type HomePageProps = {

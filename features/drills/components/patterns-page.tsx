@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Route } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import type { Drill, DrillGroup } from "../types";
+import type { Drill, DrillGroup } from "../domain/types";
 
 type PatternsPageProps = {
   drillGroups: DrillGroup[];

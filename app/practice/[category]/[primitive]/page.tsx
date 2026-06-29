@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-import { DrillWorkspace } from "@/app/drill-workspace";
-import { drillGroups, drills, getDrillByRoute } from "@/app/drills";
+import { DrillWorkspace } from "@/features/drills/components/drill-workspace";
+import { drillGroups, drills, getDrillByRoute } from "@/features/drills";
 
 type PracticePageProps = {
   params: Promise<{

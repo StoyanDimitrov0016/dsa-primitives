@@ -3,7 +3,7 @@
 import { Lightbulb } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
-import type { Drill, DrillLessonBlock } from "../types";
+import type { Drill, DrillLessonBlock } from "../domain/types";
 
 type DrillReferenceContentProps = {
   drill: Drill;

@@ -17,12 +17,13 @@ import {
 import { cn } from "@/lib/utils";
 import { THEME_STORAGE_KEY } from "../constants";
 import { runInWorker } from "../lib/runner";
-import type { Drill, DrillGroup, RunState, Theme } from "../types";
+import type { Drill, DrillGroup, RunState, Theme } from "../domain/types";
 import { ConsolePanel } from "./console-panel";
 import { DrillReferenceContent, DrillReferencePanel } from "./drill-reference-panel";
 import { DrillHeader } from "./drill-header";
 import { IconButton } from "./icon-button";
 import { PrimitiveMobileNavigation, PrimitiveSidebar } from "./primitive-sidebar";
+import { useDrillSidebarState } from "./sidebar-state";
 import { SolutionEditor } from "./solution-editor";
 
 type DrillWorkspaceProps = {
@@ -32,6 +33,8 @@ type DrillWorkspaceProps = {
 };
 
 export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWorkspaceProps) {
+  const sidebarState = useDrillSidebarState();
+  const [fallbackOpenGroups, setFallbackOpenGroups] = useState<Record<string, boolean>>({});
   const [theme] = useState<Theme>(() => {
     if (typeof window === "undefined") {
       return "dark";
@@ -45,9 +48,6 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
 
     return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
   });
-  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({
-    [selectedDrill.groupId]: true,
-  });
   const [solutions, setSolutions] = useState<Record<string, string>>(() =>
     Object.fromEntries(drills.map((drill) => [drill.id, drill.starterCode]))
   );
@@ -55,9 +55,10 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isMobileNavigationOpen, setIsMobileNavigationOpen] = useState(false);
   const [isMobileReferenceOpen, setIsMobileReferenceOpen] = useState(false);
-  const [isReferencePanelOpen, setIsReferencePanelOpen] = useState(true);
+  const [isReferencePanelOpen, setIsReferencePanelOpen] = useState(false);
 
   const code = solutions[selectedDrill.id] ?? selectedDrill.starterCode;
+  const openGroups = sidebarState?.openGroups ?? fallbackOpenGroups;
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
@@ -116,7 +117,12 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
   }
 
   function updateGroupOpen(groupId: string, open: boolean) {
-    setOpenGroups((current) => ({ ...current, [groupId]: open }));
+    if (sidebarState) {
+      sidebarState.setGroupOpen(groupId, open);
+      return;
+    }
+
+    setFallbackOpenGroups((current) => ({ ...current, [groupId]: open }));
   }
 
   return (

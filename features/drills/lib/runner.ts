@@ -1,5 +1,6 @@
-import { DRILL_RUNNER_WORKER_PATH, RUN_TIMEOUT_MS } from "../constants";
-import type { Drill, DrillCase, RunResult, RunState } from "../types";
+import { RUN_TIMEOUT_MS } from "../constants";
+import { RunResponseSchema } from "../domain/schemas";
+import type { Drill, DrillCase, RunState } from "../domain/types";
 
 export function runInWorker(
   drill: Drill,
@@ -7,7 +8,9 @@ export function runInWorker(
   cases: Array<DrillCase & { kind: "visible" | "hidden" }>
 ): Promise<RunState> {
   const startedAt = performance.now();
-  const worker = new Worker(DRILL_RUNNER_WORKER_PATH);
+  const worker = new Worker(new URL("./drill-runner.worker.ts", import.meta.url), {
+    type: "module",
+  });
 
   return new Promise((resolve) => {
     const timeoutId = window.setTimeout(() => {
@@ -24,8 +27,7 @@ export function runInWorker(
       worker.terminate();
 
       const durationMs = Math.round(performance.now() - startedAt);
-      const payload = event.data as
-        { ok: true; results: RunResult[] } | { ok: false; error: string };
+      const payload = RunResponseSchema.parse(event.data);
 
       if (!payload.ok) {
         resolve({ status: "error", message: payload.error, durationMs });
@@ -52,9 +54,9 @@ export function runInWorker(
 
     worker.postMessage({
       code,
-      comparison: drill.assertion?.comparison ?? "deepEqual",
-      functionName: drill.contract.functionName,
+      assertion: drill.assertion,
       cases,
+      contract: drill.contract,
     });
   });
 }

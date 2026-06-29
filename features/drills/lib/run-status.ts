@@ -1,4 +1,4 @@
-import type { RunResult, RunState, Theme } from "../types";
+import type { RunResult, RunState, Theme } from "../domain/types";
 
 export function getStatusLabel(runState: RunState) {
   if (runState.status === "passed") {

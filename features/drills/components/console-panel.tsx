@@ -4,7 +4,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { formatValue } from "../lib/format-value";
 import { getResultTextClassName, getStatusClassName, getStatusLabel } from "../lib/run-status";
-import type { Drill, RunState, Theme } from "../types";
+import type { Drill, RunState, Theme } from "../domain/types";
 
 type ConsolePanelProps = {
   drill: Drill;
