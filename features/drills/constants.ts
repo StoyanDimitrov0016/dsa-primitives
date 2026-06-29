@@ -1,5 +1,3 @@
-export const DRILL_RUNNER_WORKER_PATH = "/drill-runner.worker.js";
-
 export const RUN_TIMEOUT_MS = 1200;
 
 export { THEME_STORAGE_KEY } from "@/lib/theme";
