@@ -66,6 +66,8 @@ describe("defineFunctionDrill", () => {
     });
 
     expect(drill.kind).toBe("function");
+    expect(drill.starterCode).toContain("@param {number[]} nums");
+    expect(drill.starterCode).toContain("@returns {number}");
     expect(drill.starterCode).toContain("function sample(nums)");
     expect(drill.implementation).toContain("function sample(nums)");
     expect(drill.cases.visible).toHaveLength(1);
