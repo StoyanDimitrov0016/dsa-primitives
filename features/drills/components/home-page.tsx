@@ -41,12 +41,18 @@ export function HomePage({ drillGroups, drills }: HomePageProps) {
           </p>
 
           <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-            <Link className={cn(buttonVariants({ size: "lg" }))} href={drillsHref}>
-              Start drilling
+            <Link className={cn(buttonVariants({ size: "lg" }))} href="/learn">
+              Start learning
               <ArrowRight className="size-4" />
             </Link>
             <Link
               className={cn(buttonVariants({ size: "lg", variant: "outline" }))}
+              href={drillsHref}
+            >
+              Drill directly
+            </Link>
+            <Link
+              className={cn(buttonVariants({ size: "lg", variant: "ghost" }))}
               href="/patterns"
             >
               Browse patterns
