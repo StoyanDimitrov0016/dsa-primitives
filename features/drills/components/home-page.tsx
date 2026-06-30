@@ -40,16 +40,17 @@ export function HomePage({ drillGroups, drills }: HomePageProps) {
             prefixes become reflex. Then the real problem gets your full attention.
           </p>
 
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-            <Link className={cn(buttonVariants({ size: "lg" }))} href={drillsHref}>
-              Start drilling
+          <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+            <Link className={cn(buttonVariants({ size: "lg" }))} href="/learn">
+              Start learning
               <ArrowRight className="size-4" />
             </Link>
             <Link
-              className={cn(buttonVariants({ size: "lg", variant: "outline" }))}
-              href="/patterns"
+              className="text-sm font-medium text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline"
+              href={drillsHref}
             >
-              Browse patterns
+              Drill directly
+              <ArrowRight className="ml-1 inline size-3.5 align-[-2px]" />
             </Link>
           </div>
 

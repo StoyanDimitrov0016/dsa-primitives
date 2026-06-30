@@ -1,8 +1,11 @@
 "use client";
 
 import Editor from "@monaco-editor/react";
-import { MONACO_DARK_THEME_ID, MONACO_LANGUAGE_ID } from "../constants";
-import { defineEditorTheme, editorOptions } from "../lib/editor-config";
+import { useEffect, useState } from "react";
+import { getBrowserTheme, THEME_CHANGE_EVENT } from "@/lib/theme";
+import { MONACO_LANGUAGE_ID } from "../constants";
+import { getEditorOptions } from "../lib/editor-config";
+import type { Theme } from "../domain/types";
 
 const previewCode = `function binarySearch(nums, target) {
   let lo = 0;
@@ -19,6 +22,17 @@ const previewCode = `function binarySearch(nums, target) {
 }`;
 
 export function HomeCodePreview() {
+  const [theme, setTheme] = useState<Theme>(getBrowserTheme);
+
+  useEffect(() => {
+    function handleThemeChange(event: Event) {
+      setTheme((event as CustomEvent<Theme>).detail);
+    }
+
+    window.addEventListener(THEME_CHANGE_EVENT, handleThemeChange);
+    return () => window.removeEventListener(THEME_CHANGE_EVENT, handleThemeChange);
+  }, []);
+
   return (
     <div className="h-[420px] overflow-hidden rounded-lg border bg-[var(--editor)] shadow-2xl">
       <div className="flex h-10 items-center justify-between border-b px-4">
@@ -33,25 +47,33 @@ export function HomeCodePreview() {
         <div className="w-16" />
       </div>
       <Editor
-        beforeMount={defineEditorTheme}
         height="calc(100% - 2.5rem)"
         language={MONACO_LANGUAGE_ID}
         options={{
-          ...editorOptions,
+          ...getEditorOptions({ autoSuggestions: false }),
           contextmenu: false,
           cursorBlinking: "solid",
+          domReadOnly: true,
           folding: false,
+          glyphMargin: false,
+          hover: { enabled: false },
+          links: false,
           lineNumbersMinChars: 3,
           minimap: { enabled: false },
+          occurrencesHighlight: "off",
+          overviewRulerLanes: 0,
           readOnly: true,
           renderLineHighlight: "none",
+          renderValidationDecorations: "off",
+          selectionHighlight: false,
           scrollbar: {
             horizontal: "hidden",
             vertical: "hidden",
           },
+          suggest: { showWords: false },
           wordWrap: "off",
         }}
-        theme={MONACO_DARK_THEME_ID}
+        theme={theme === "dark" ? "vs-dark" : "vs"}
         value={previewCode}
       />
     </div>

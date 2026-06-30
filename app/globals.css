@@ -142,3 +142,152 @@
     @apply font-sans;
   }
 }
+
+@layer components {
+  .lesson-markdown {
+    @apply mx-auto w-full max-w-3xl min-w-0 text-base leading-7 text-foreground;
+  }
+
+  .lesson-markdown h1 {
+    @apply mb-6 text-4xl leading-tight font-semibold md:text-5xl;
+  }
+
+  .lesson-markdown h2 {
+    @apply mt-12 mb-4 border-t pt-8 text-2xl font-semibold;
+  }
+
+  .lesson-markdown h3 {
+    @apply mt-9 mb-3 text-xl font-semibold;
+  }
+
+  .lesson-markdown h4 {
+    @apply mt-7 mb-2 text-lg font-semibold;
+  }
+
+  .lesson-markdown p,
+  .lesson-markdown blockquote,
+  .lesson-markdown ul,
+  .lesson-markdown ol,
+  .lesson-markdown pre,
+  .lesson-markdown table {
+    @apply my-5;
+  }
+
+  .lesson-markdown p {
+    @apply text-muted-foreground;
+  }
+
+  .lesson-markdown blockquote {
+    @apply border-l-4 pl-4 font-medium text-foreground;
+  }
+
+  .lesson-markdown ul {
+    @apply list-disc pl-6;
+  }
+
+  .lesson-markdown ol {
+    @apply list-decimal pl-6;
+  }
+
+  .lesson-markdown li {
+    @apply my-2 text-muted-foreground;
+  }
+
+  .lesson-markdown pre {
+    @apply max-w-full overflow-x-auto rounded-lg border bg-[#24292e] p-4 text-sm leading-6;
+    scrollbar-color: oklch(0.65 0 0) oklch(0.24 0 0);
+    scrollbar-width: thin;
+  }
+
+  .lesson-markdown pre code {
+    @apply block min-w-0 font-mono;
+  }
+
+  .lesson-markdown :not(pre) > code {
+    @apply rounded bg-muted px-1.5 py-0.5 font-mono text-[0.92em];
+  }
+
+  .lesson-markdown [data-rehype-pretty-code-figure] {
+    @apply my-5 max-w-full min-w-0;
+  }
+
+  .lesson-markdown [data-rehype-pretty-code-figure] pre {
+    @apply my-0;
+  }
+
+  .lesson-markdown [data-line] {
+    @apply px-0;
+  }
+
+  .lesson-markdown [data-language="txt"] [data-line] {
+    white-space: pre-wrap;
+  }
+
+  .lesson-markdown [data-language="txt"] code {
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .lesson-markdown pre::-webkit-scrollbar {
+    height: 0.6rem;
+  }
+
+  .lesson-markdown pre::-webkit-scrollbar-track {
+    background: oklch(0.24 0 0);
+    border-radius: 999px;
+  }
+
+  .lesson-markdown pre::-webkit-scrollbar-thumb {
+    background: oklch(0.65 0 0);
+    border-radius: 999px;
+  }
+
+  .lesson-markdown table {
+    @apply w-full border-collapse overflow-hidden rounded-lg border text-sm;
+  }
+
+  .lesson-markdown th,
+  .lesson-markdown td {
+    @apply border px-3 py-2 text-left align-top;
+  }
+
+  .lesson-markdown th {
+    @apply bg-muted font-semibold;
+  }
+
+  .lesson-markdown td {
+    @apply text-muted-foreground;
+  }
+
+  .lesson-markdown hr {
+    @apply my-10 border-border;
+  }
+
+  .code-block pre {
+    @apply m-0 max-w-full min-w-max bg-transparent! p-3;
+  }
+
+  .code-block code {
+    @apply block font-mono;
+  }
+
+  .code-block {
+    scrollbar-color: oklch(0.65 0 0) oklch(0.24 0 0);
+    scrollbar-width: thin;
+  }
+
+  .code-block::-webkit-scrollbar {
+    height: 0.6rem;
+    width: 0.6rem;
+  }
+
+  .code-block::-webkit-scrollbar-track {
+    background: oklch(0.24 0 0);
+    border-radius: 999px;
+  }
+
+  .code-block::-webkit-scrollbar-thumb {
+    background: oklch(0.65 0 0);
+    border-radius: 999px;
+  }
+}
