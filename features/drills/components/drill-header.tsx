@@ -7,20 +7,20 @@ import { IconButton } from "./icon-button";
 type DrillHeaderProps = {
   drill: Drill;
   isSidebarOpen: boolean;
-  isReferencePanelOpen: boolean;
+  isHintsPanelOpen: boolean;
   onOpenMobileNavigation: () => void;
-  onOpenMobileReference: () => void;
-  onToggleReferencePanel: () => void;
+  onOpenMobileHints: () => void;
+  onToggleHintsPanel: () => void;
   onToggleSidebar: () => void;
 };
 
 export function DrillHeader({
   drill,
   isSidebarOpen,
-  isReferencePanelOpen,
+  isHintsPanelOpen,
   onOpenMobileNavigation,
-  onOpenMobileReference,
-  onToggleReferencePanel,
+  onOpenMobileHints,
+  onToggleHintsPanel,
   onToggleSidebar,
 }: DrillHeaderProps) {
   const ToggleIcon = isSidebarOpen ? PanelLeftClose : PanelLeftOpen;
@@ -49,21 +49,21 @@ export function DrillHeader({
 
         <Button
           className="hidden shrink-0 gap-2 xl:inline-flex"
-          onClick={onToggleReferencePanel}
+          onClick={onToggleHintsPanel}
           size="sm"
-          variant={isReferencePanelOpen ? "secondary" : "outline"}
+          variant={isHintsPanelOpen ? "secondary" : "outline"}
         >
           <Lightbulb className="size-4" />
-          Lesson
+          Hints
         </Button>
         <Button
           className="shrink-0 gap-2 xl:hidden"
-          onClick={onOpenMobileReference}
+          onClick={onOpenMobileHints}
           size="sm"
           variant="secondary"
         >
           <Lightbulb className="size-4" />
-          Lesson
+          Hints
         </Button>
       </div>
       <div className="space-y-2">

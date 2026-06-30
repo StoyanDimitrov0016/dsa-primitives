@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Code2, Lightbulb, Play, RotateCcw } from "lucide-react";
+import { Code2, Play, RotateCcw, TextCursorInput } from "lucide-react";
 import prettier from "prettier/standalone";
 import babelPlugin from "prettier/plugins/babel";
 import estreePlugin from "prettier/plugins/estree";
@@ -16,12 +16,12 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { Switch } from "@/components/ui/switch";
+import { getBrowserTheme, THEME_CHANGE_EVENT } from "@/lib/theme";
 import { cn } from "@/lib/utils";
-import { THEME_STORAGE_KEY } from "../constants";
 import { runInWorker } from "../lib/runner";
 import type { Drill, DrillGroup, RunState, Theme } from "../domain/types";
 import { ConsolePanel } from "./console-panel";
-import { DrillReferenceContent, DrillReferencePanel } from "./drill-reference-panel";
+import { DrillHintsContent, DrillHintsPanel } from "./drill-hints-panel";
 import { DrillHeader } from "./drill-header";
 import { IconButton } from "./icon-button";
 import { PrimitiveMobileNavigation, PrimitiveSidebar } from "./primitive-sidebar";
@@ -37,36 +37,28 @@ type DrillWorkspaceProps = {
 export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWorkspaceProps) {
   const sidebarState = useDrillSidebarState();
   const [fallbackOpenGroups, setFallbackOpenGroups] = useState<Record<string, boolean>>({});
-  const [theme] = useState<Theme>(() => {
-    if (typeof window === "undefined") {
-      return "dark";
-    }
-
-    const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
-
-    if (storedTheme === "light" || storedTheme === "dark") {
-      return storedTheme;
-    }
-
-    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-  });
+  const [theme, setTheme] = useState<Theme>(getBrowserTheme);
   const [solutions, setSolutions] = useState<Record<string, string>>(() =>
     Object.fromEntries(drills.map((drill) => [drill.id, drill.starterCode]))
   );
   const [runState, setRunState] = useState<RunState>({ status: "idle" });
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isMobileNavigationOpen, setIsMobileNavigationOpen] = useState(false);
-  const [isMobileReferenceOpen, setIsMobileReferenceOpen] = useState(false);
-  const [isReferencePanelOpen, setIsReferencePanelOpen] = useState(false);
+  const [isMobileHintsOpen, setIsMobileHintsOpen] = useState(false);
+  const [isHintsPanelOpen, setIsHintsPanelOpen] = useState(false);
   const [autoSuggestions, setAutoSuggestions] = useState(false);
 
   const code = solutions[selectedDrill.id] ?? selectedDrill.starterCode;
   const openGroups = sidebarState?.openGroups ?? fallbackOpenGroups;
 
   useEffect(() => {
-    document.documentElement.classList.toggle("dark", theme === "dark");
-    window.localStorage.setItem(THEME_STORAGE_KEY, theme);
-  }, [theme]);
+    function handleThemeChange(event: Event) {
+      setTheme((event as CustomEvent<Theme>).detail);
+    }
+
+    window.addEventListener(THEME_CHANGE_EVENT, handleThemeChange);
+    return () => window.removeEventListener(THEME_CHANGE_EVENT, handleThemeChange);
+  }, []);
 
   function updateCode(nextCode: string) {
     setSolutions((current) => ({
@@ -147,9 +139,13 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
         </SheetContent>
       </Sheet>
 
-      <Sheet onOpenChange={setIsMobileReferenceOpen} open={isMobileReferenceOpen}>
+      <Sheet onOpenChange={setIsMobileHintsOpen} open={isMobileHintsOpen}>
         <SheetContent className="gap-0 p-0 xl:hidden" side="right">
-          <DrillReferenceContent drill={selectedDrill} />
+          <SheetHeader className="border-b">
+            <SheetTitle>Hints</SheetTitle>
+            <SheetDescription>Use concept and implementation hints while practicing.</SheetDescription>
+          </SheetHeader>
+          <DrillHintsContent drill={selectedDrill} />
         </SheetContent>
       </Sheet>
 
@@ -166,21 +162,21 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
         <div
           className={cn(
             "grid h-full min-h-0 overflow-hidden",
-            isReferencePanelOpen && "xl:grid-cols-[minmax(0,1fr)_320px]"
+            isHintsPanelOpen && "xl:grid-cols-[minmax(0,1fr)_320px]"
           )}
         >
           <ResizablePanelGroup className="h-full min-h-0 overflow-hidden" orientation="vertical">
             <ResizablePanel className="min-h-0 overflow-hidden" defaultSize={72} minSize={42}>
               <div className="flex h-full min-h-0 flex-col overflow-hidden">
-                <DrillHeader
-                  drill={selectedDrill}
-                  isSidebarOpen={isSidebarOpen}
-                  isReferencePanelOpen={isReferencePanelOpen}
-                  onOpenMobileNavigation={() => setIsMobileNavigationOpen(true)}
-                  onOpenMobileReference={() => setIsMobileReferenceOpen(true)}
-                  onToggleReferencePanel={() => setIsReferencePanelOpen((current) => !current)}
-                  onToggleSidebar={() => setIsSidebarOpen((current) => !current)}
-                />
+                  <DrillHeader
+                    drill={selectedDrill}
+                    isSidebarOpen={isSidebarOpen}
+                    isHintsPanelOpen={isHintsPanelOpen}
+                    onOpenMobileNavigation={() => setIsMobileNavigationOpen(true)}
+                    onOpenMobileHints={() => setIsMobileHintsOpen(true)}
+                    onToggleHintsPanel={() => setIsHintsPanelOpen((current) => !current)}
+                    onToggleSidebar={() => setIsSidebarOpen((current) => !current)}
+                  />
                 <div className="flex shrink-0 flex-col border-b">
                   <div className="flex h-11 items-center justify-between px-3">
                     <div className="text-sm font-medium">Solution</div>
@@ -194,7 +190,7 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
                               size="icon-sm"
                               variant={autoSuggestions ? "secondary" : "ghost"}
                             >
-                              <Lightbulb className="size-4" />
+                              <TextCursorInput className="size-4" />
                             </Button>
                           }
                         />
@@ -248,7 +244,7 @@ export function DrillWorkspace({ drillGroups, drills, selectedDrill }: DrillWork
             </ResizablePanel>
           </ResizablePanelGroup>
 
-          {isReferencePanelOpen ? <DrillReferencePanel drill={selectedDrill} /> : null}
+          {isHintsPanelOpen ? <DrillHintsPanel drill={selectedDrill} /> : null}
         </div>
       </section>
     </div>

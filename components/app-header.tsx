@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { THEME_STORAGE_KEY, type Theme } from "@/lib/theme";
+import { applyBrowserTheme, getBrowserTheme, type Theme } from "@/lib/theme";
 import { cn } from "@/lib/utils";
 
 const navigationItems = [
@@ -14,28 +14,13 @@ const navigationItems = [
   { href: "/patterns", label: "Patterns" },
 ] as const;
 
-function getInitialTheme(): Theme {
-  if (typeof window === "undefined") {
-    return "dark";
-  }
-
-  const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
-
-  if (storedTheme === "light" || storedTheme === "dark") {
-    return storedTheme;
-  }
-
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-}
-
 export function AppHeader() {
   const pathname = usePathname();
-  const [theme, setTheme] = useState<Theme>(getInitialTheme);
+  const [theme, setTheme] = useState<Theme>(getBrowserTheme);
   const ThemeIcon = theme === "dark" ? Sun : Moon;
 
   useEffect(() => {
-    document.documentElement.classList.toggle("dark", theme === "dark");
-    window.localStorage.setItem(THEME_STORAGE_KEY, theme);
+    applyBrowserTheme(theme);
   }, [theme]);
 
   return (
