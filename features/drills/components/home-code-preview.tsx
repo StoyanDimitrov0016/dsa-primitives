@@ -1,8 +1,8 @@
 "use client";
 
 import Editor from "@monaco-editor/react";
-import { MONACO_DARK_THEME_ID, MONACO_LANGUAGE_ID } from "../constants";
-import { defineEditorTheme, editorOptions } from "../lib/editor-config";
+import { MONACO_LANGUAGE_ID } from "../constants";
+import { getEditorOptions } from "../lib/editor-config";
 
 const previewCode = `function binarySearch(nums, target) {
   let lo = 0;
@@ -33,11 +33,10 @@ export function HomeCodePreview() {
         <div className="w-16" />
       </div>
       <Editor
-        beforeMount={defineEditorTheme}
         height="calc(100% - 2.5rem)"
         language={MONACO_LANGUAGE_ID}
         options={{
-          ...editorOptions,
+          ...getEditorOptions({ autoSuggestions: false }),
           contextmenu: false,
           cursorBlinking: "solid",
           folding: false,
@@ -51,7 +50,7 @@ export function HomeCodePreview() {
           },
           wordWrap: "off",
         }}
-        theme={MONACO_DARK_THEME_ID}
+        theme="vs-dark"
         value={previewCode}
       />
     </div>
