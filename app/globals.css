@@ -262,4 +262,32 @@
   .lesson-markdown hr {
     @apply my-10 border-border;
   }
+
+  .code-block pre {
+    @apply m-0 max-w-full min-w-max bg-transparent! p-3;
+  }
+
+  .code-block code {
+    @apply block font-mono;
+  }
+
+  .code-block {
+    scrollbar-color: oklch(0.65 0 0) oklch(0.24 0 0);
+    scrollbar-width: thin;
+  }
+
+  .code-block::-webkit-scrollbar {
+    height: 0.6rem;
+    width: 0.6rem;
+  }
+
+  .code-block::-webkit-scrollbar-track {
+    background: oklch(0.24 0 0);
+    border-radius: 999px;
+  }
+
+  .code-block::-webkit-scrollbar-thumb {
+    background: oklch(0.65 0 0);
+    border-radius: 999px;
+  }
 }
