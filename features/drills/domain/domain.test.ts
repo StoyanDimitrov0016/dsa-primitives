@@ -14,6 +14,9 @@ const validDrillInput = {
   summary: "Sample summary.",
   prompt: "Implement the sample function.",
   lesson: [{ type: "paragraph", text: "Sample lesson." }],
+  implementation: `function sample(nums) {
+  return nums.length;
+}`,
   contract: {
     functionName: "sample",
     parameters: ["nums"],
@@ -64,6 +67,7 @@ describe("defineFunctionDrill", () => {
 
     expect(drill.kind).toBe("function");
     expect(drill.starterCode).toContain("function sample(nums)");
+    expect(drill.implementation).toContain("function sample(nums)");
     expect(drill.cases.visible).toHaveLength(1);
     expect(drill.cases.hidden).toHaveLength(1);
   });

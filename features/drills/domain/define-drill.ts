@@ -1,4 +1,5 @@
 import { DrillGroupSchema, DrillSchema } from "./schemas";
+import { drillImplementations } from "./implementations";
 import type {
   Drill,
   DrillAssertion,
@@ -20,6 +21,7 @@ type DefineFunctionDrillInput = {
   summary: string;
   prompt: string;
   lesson: DrillLessonBlock[];
+  implementation?: string;
   contract: DrillContract;
   assertion?: DrillAssertion;
   starterCode?: string;
@@ -42,6 +44,8 @@ export function defineDrill(input: DefineDrillInput): Drill {
 }
 
 export function defineFunctionDrill(input: DefineFunctionDrillInput): Drill {
+  const starterCode = input.starterCode ?? createFunctionStarterCode(input.contract);
+
   return defineDrill({
     id: input.id,
     groupId: input.groupId,
@@ -51,9 +55,10 @@ export function defineFunctionDrill(input: DefineFunctionDrillInput): Drill {
     summary: input.summary,
     prompt: input.prompt,
     lesson: input.lesson,
+    implementation: input.implementation ?? drillImplementations[input.id] ?? starterCode,
     contract: input.contract,
     assertion: input.assertion,
-    starterCode: input.starterCode ?? createFunctionStarterCode(input.contract),
+    starterCode,
     cases: {
       visible: input.visible,
       hidden: input.hidden,

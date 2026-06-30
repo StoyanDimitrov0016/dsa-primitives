@@ -57,6 +57,7 @@ export const DrillSchema = z.object({
   summary: z.string().trim().min(1),
   prompt: z.string().trim().min(1),
   lesson: z.array(DrillLessonBlockSchema).min(1),
+  implementation: z.string().trim().min(1),
   contract: DrillContractSchema,
   assertion: DrillAssertionSchema.optional(),
   starterCode: z.string().trim().min(1),
